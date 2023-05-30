@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.yzz</groupId>
+        <artifactId>yzz</artifactId>
+        <version>3.6.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>yyy-common-log</module>
+        <module>yyy-common-core</module>
+        <module>yyy-common-redis</module>
+        <module>yyy-common-seata</module>
+        <module>yyy-common-swagger</module>
+        <module>yyy-common-security</module>
+        <module>yyy-common-datascope</module>
+        <module>yyy-common-datasource</module>
+    </modules>
+
+    <artifactId>yzz-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        yyy-common通用模块
+    </description>
+
+</project>
