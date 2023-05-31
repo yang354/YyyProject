@@ -1,0 +1,80 @@
+服务模块访问swagger
+http://127.0.0.1:9201/swagger-ui/index.html
+
+而直接通过模块去访问接口，不会经过网关拦截，则不需要认证也可以直接访问接口
+
+
+如果启动了网关就可以这样访问
+http://127.0.0.1:8080/swagger-ui/index.html
+然后选择已经启动的模块，这时就可以看到接口
+
+通过网关去访问接口时会根据是否有忽略放行的路径，否则都需要去认证token（此时想认证成功就得在启动auth模块）
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+模块添加swagger功能
+1、启动类加上注解 @EnableCustomSwagger2
+2、pom文件加入依赖
+            <!-- Swagger UI -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.fox.version}</version>
+            </dependency>
+            <!-- RuoYi Common Swagger -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-common-swagger</artifactId>
+            </dependency>
+3、yaml文件配置
+    # swagger配置
+    swagger:
+      title: 权限模块接口文档
+      license: Powered By ruoyi
+      licenseUrl: https://ruoyi.vip
+
+到这一步已经可以通过服务模块去访问swagger
+
+4、如果想通过网关统一访问，需要注释网关配置的一些代码 SwaggerProvider
+注释掉两行代码
+    .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
+    .filter(predicateDefinition -> !"ruoyi-auth".equalsIgnoreCase(routeDefinition.getId()))
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+注意调用登录接口时，启动auth模块是不够的，auth模块远程调用了system模块，所以还要启动system模块
+
+登录用户名 admin
+登录密码 admin123
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+调用接口如何携带token
+第一种通过postMan访问接口
+
+key值   Authorization
+value值  Bearer xxxxxtokenxxxxx
+
+
+第二种通过swagger - 网关模块
+value值  Bearer xxxxxtokenxxxxx
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+如何使用远程调用
+首先启动调用的接口方的服务模块要启动和被调用方的服务模块要启动
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+上传文件时报错，不是因为超过了设置的文件大小，而是默认springboot的tomcat默认上传文件大小是1MB，需要设置
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+tomcat这边 优先触发
+当设置为-1时，表示tomcat这边无限制，但是我们配置不能超过50MB的配置，超过时也会抛出异常
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+想要日志输入sql语句时，logback.xml文件的输出方式改为debug
+        <!-- 系统模块日志级别控制  -->
+    	<logger name="com.ruoyi" level="debug" />
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

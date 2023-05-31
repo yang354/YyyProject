@@ -69,7 +69,8 @@ public class SysRoleController extends BaseController
     /**
      * 根据角色编号获取详细信息
      */
-    @RequiresPermissions("system:role:query")
+    //@RequiresPermissions("system:role:query")
+    //@RequiresLogin
     @GetMapping(value = "/{roleId}")
     public AjaxResult getInfo(@PathVariable Long roleId)
     {

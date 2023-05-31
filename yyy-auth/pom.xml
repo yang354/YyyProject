@@ -51,6 +51,18 @@
             <groupId>com.yzz</groupId>
             <artifactId>yzz-common-security</artifactId>
         </dependency>
+
+        <!-- Swagger UI -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.fox.version}</version>
+        </dependency>
+        <!-- RuoYi Common Swagger -->
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-swagger</artifactId>
+        </dependency>
         
     </dependencies>
 	
