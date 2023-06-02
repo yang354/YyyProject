@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 
 /**
  * 任务执行工具
@@ -18,11 +18,11 @@ public class JobInvokeUtil
     /**
      * 执行方法
      *
-     * @param sysJob 系统任务
+     * @param sysJobVO 系统任务
      */
-    public static void invokeMethod(SysJob sysJob) throws Exception
+    public static void invokeMethod(SysJobVO sysJobVO) throws Exception
     {
-        String invokeTarget = sysJob.getInvokeTarget();
+        String invokeTarget = sysJobVO.getInvokeTarget();
         String beanName = getBeanName(invokeTarget);
         String methodName = getMethodName(invokeTarget);
         List<Object[]> methodParams = getMethodParams(invokeTarget);

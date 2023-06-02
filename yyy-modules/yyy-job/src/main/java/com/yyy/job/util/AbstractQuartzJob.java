@@ -11,8 +11,8 @@ import com.yyy.common.core.utils.ExceptionUtil;
 import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.core.utils.bean.BeanUtils;
-import com.yyy.job.domain.SysJob;
-import com.yyy.job.domain.SysJobLog;
+import com.yyy.job.vo.SysJobVO;
+import com.yyy.job.vo.SysJobLogVO;
 import com.yyy.job.service.ISysJobLogService;
 
 /**
@@ -32,21 +32,21 @@ public abstract class AbstractQuartzJob implements Job
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
-        SysJob sysJob = new SysJob();
-        BeanUtils.copyBeanProp(sysJob, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
+        SysJobVO SysJobVO = new SysJobVO();
+        BeanUtils.copyBeanProp(SysJobVO, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
         try
         {
-            before(context, sysJob);
-            if (sysJob != null)
+            before(context, SysJobVO);
+            if (SysJobVO != null)
             {
-                doExecute(context, sysJob);
+                doExecute(context, SysJobVO);
             }
-            after(context, sysJob, null);
+            after(context, SysJobVO, null);
         }
         catch (Exception e)
         {
             log.error("任务执行异常  - ：", e);
-            after(context, sysJob, e);
+            after(context, SysJobVO, e);
         }
     }
 
@@ -54,9 +54,9 @@ public abstract class AbstractQuartzJob implements Job
      * 执行前
      *
      * @param context 工作执行上下文对象
-     * @param sysJob 系统计划任务
+     * @param sysJobVO 系统计划任务
      */
-    protected void before(JobExecutionContext context, SysJob sysJob)
+    protected void before(JobExecutionContext context, SysJobVO sysJobVO)
     {
         threadLocal.set(new Date());
     }
@@ -65,42 +65,42 @@ public abstract class AbstractQuartzJob implements Job
      * 执行后
      *
      * @param context 工作执行上下文对象
-     * @param sysJob 系统计划任务
+     * @param sysJobVO 系统计划任务
      */
-    protected void after(JobExecutionContext context, SysJob sysJob, Exception e)
+    protected void after(JobExecutionContext context, SysJobVO sysJobVO, Exception e)
     {
         Date startTime = threadLocal.get();
         threadLocal.remove();
 
-        final SysJobLog sysJobLog = new SysJobLog();
-        sysJobLog.setJobName(sysJob.getJobName());
-        sysJobLog.setJobGroup(sysJob.getJobGroup());
-        sysJobLog.setInvokeTarget(sysJob.getInvokeTarget());
-        sysJobLog.setStartTime(startTime);
-        sysJobLog.setStopTime(new Date());
-        long runMs = sysJobLog.getStopTime().getTime() - sysJobLog.getStartTime().getTime();
-        sysJobLog.setJobMessage(sysJobLog.getJobName() + " 总共耗时：" + runMs + "毫秒");
+        final SysJobLogVO SysJobLogVO = new SysJobLogVO();
+        SysJobLogVO.setJobName(sysJobVO.getJobName());
+        SysJobLogVO.setJobGroup(sysJobVO.getJobGroup());
+        SysJobLogVO.setInvokeTarget(sysJobVO.getInvokeTarget());
+        SysJobLogVO.setStartTime(startTime);
+        SysJobLogVO.setStopTime(new Date());
+        long runMs = SysJobLogVO.getStopTime().getTime() - SysJobLogVO.getStartTime().getTime();
+        SysJobLogVO.setJobMessage(SysJobLogVO.getJobName() + " 总共耗时：" + runMs + "毫秒");
         if (e != null)
         {
-            sysJobLog.setStatus("1");
+            SysJobLogVO.setStatus("1");
             String errorMsg = StringUtils.substring(ExceptionUtil.getExceptionMessage(e), 0, 2000);
-            sysJobLog.setExceptionInfo(errorMsg);
+            SysJobLogVO.setExceptionInfo(errorMsg);
         }
         else
         {
-            sysJobLog.setStatus("0");
+            SysJobLogVO.setStatus("0");
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        SpringUtils.getBean(ISysJobLogService.class).addJobLog(SysJobLogVO);
     }
 
     /**
      * 执行方法，由子类重载
      *
      * @param context 工作执行上下文对象
-     * @param sysJob 系统计划任务
+     * @param sysJobVO 系统计划任务
      * @throws Exception 执行过程中的异常
      */
-    protected abstract void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception;
+    protected abstract void doExecute(JobExecutionContext context, SysJobVO sysJobVO) throws Exception;
 }

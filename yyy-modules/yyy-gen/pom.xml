@@ -71,6 +71,11 @@
             <groupId>com.yzz</groupId>
             <artifactId>yzz-common-swagger</artifactId>
         </dependency>
+        <!-- RuoYi Common DataSource -->
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-datasource</artifactId>
+        </dependency>
 
     </dependencies>
 

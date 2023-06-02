@@ -2,14 +2,18 @@ package com.yyy.gen.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.yyy.common.core.web.page.IServicePlus;
 import com.yyy.gen.domain.GenTable;
+import com.yyy.gen.domain.GenTableColumn;
+import com.yyy.gen.vo.GenTableVO;
 
 /**
  * 业务 服务层
  * 
 * @author 羊扬杨
  */
-public interface IGenTableService
+public interface IGenTableService extends IServicePlus<GenTable>
 {
     /**
      * 查询业务列表
@@ -17,7 +21,7 @@ public interface IGenTableService
      * @param genTable 业务信息
      * @return 业务集合
      */
-    public List<GenTable> selectGenTableList(GenTable genTable);
+    public List<GenTableVO> selectGenTableList(GenTableVO genTable);
 
     /**
      * 查询据库列表
@@ -25,7 +29,7 @@ public interface IGenTableService
      * @param genTable 业务信息
      * @return 数据库表集合
      */
-    public List<GenTable> selectDbTableList(GenTable genTable);
+    public List<GenTableVO> selectDbTableList(GenTableVO genTable);
 
     /**
      * 查询据库列表
@@ -33,14 +37,14 @@ public interface IGenTableService
      * @param tableNames 表名称组
      * @return 数据库表集合
      */
-    public List<GenTable> selectDbTableListByNames(String[] tableNames);
+    public List<GenTableVO> selectDbTableListByNames(String[] tableNames);
 
     /**
      * 查询所有表信息
      * 
      * @return 表信息集合
      */
-    public List<GenTable> selectGenTableAll();
+    public List<GenTableVO> selectGenTableAll();
 
     /**
      * 查询业务信息
@@ -48,7 +52,7 @@ public interface IGenTableService
      * @param id 业务ID
      * @return 业务信息
      */
-    public GenTable selectGenTableById(Long id);
+    public GenTableVO selectGenTableById(Long id);
 
     /**
      * 修改业务
@@ -56,7 +60,7 @@ public interface IGenTableService
      * @param genTable 业务信息
      * @return 结果
      */
-    public void updateGenTable(GenTable genTable);
+    public void updateGenTable(GenTableVO genTable);
 
     /**
      * 删除业务信息
@@ -71,7 +75,7 @@ public interface IGenTableService
      * 
      * @param tableList 导入表列表
      */
-    public void importGenTable(List<GenTable> tableList);
+    public void importGenTable(List<GenTableVO> tableList);
 
     /**
      * 预览代码
@@ -117,5 +121,5 @@ public interface IGenTableService
      * 
      * @param genTable 业务信息
      */
-    public void validateEdit(GenTable genTable);
+    public void validateEdit(GenTableVO genTable);
 }

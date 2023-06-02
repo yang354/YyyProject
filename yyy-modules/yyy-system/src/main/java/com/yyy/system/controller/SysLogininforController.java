@@ -2,6 +2,8 @@ package com.yyy.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.api.vo.SysLogininforVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.redis.service.RedisService;
 import com.yyy.common.security.annotation.InnerAuth;
 import com.yyy.common.security.annotation.RequiresPermissions;
-import com.yyy.system.api.domain.SysLogininfor;
+
 import com.yyy.system.service.ISysLogininforService;
 
 /**
@@ -40,20 +42,20 @@ public class SysLogininforController extends BaseController
 
     @RequiresPermissions("system:logininfor:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysLogininfor logininfor)
+    public TableDataInfo list(SysLogininforVO logininfor)
     {
         startPage();
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        List<SysLogininforVO> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
     }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:logininfor:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLogininfor logininfor)
+    public void export(HttpServletResponse response, SysLogininforVO logininfor)
     {
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+        List<SysLogininforVO> list = logininforService.selectLogininforList(logininfor);
+        ExcelUtil<SysLogininforVO> util = new ExcelUtil<SysLogininforVO>(SysLogininforVO.class);
         util.exportExcel(response, list, "登录日志");
     }
 
@@ -85,7 +87,7 @@ public class SysLogininforController extends BaseController
 
     @InnerAuth
     @PostMapping
-    public AjaxResult add(@RequestBody SysLogininfor logininfor)
+    public AjaxResult add(@RequestBody SysLogininforVO logininfor)
     {
         return toAjax(logininforService.insertLogininfor(logininfor));
     }

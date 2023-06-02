@@ -18,7 +18,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.domain.SysNotice;
+import com.yyy.system.vo.SysNoticeVO;
 import com.yyy.system.service.ISysNoticeService;
 
 /**
@@ -38,10 +38,10 @@ public class SysNoticeController extends BaseController
      */
     @RequiresPermissions("system:notice:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysNotice notice)
+    public TableDataInfo list(SysNoticeVO notice)
     {
         startPage();
-        List<SysNotice> list = noticeService.selectNoticeList(notice);
+        List<SysNoticeVO> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
     }
 
@@ -61,7 +61,7 @@ public class SysNoticeController extends BaseController
     @RequiresPermissions("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysNotice notice)
+    public AjaxResult add(@Validated @RequestBody SysNoticeVO notice)
     {
         notice.setCreateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.insertNotice(notice));
@@ -73,7 +73,7 @@ public class SysNoticeController extends BaseController
     @RequiresPermissions("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysNotice notice)
+    public AjaxResult edit(@Validated @RequestBody SysNoticeVO notice)
     {
         notice.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.updateNotice(notice));

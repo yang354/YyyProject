@@ -1,6 +1,8 @@
 package com.yyy.system.controller;
 
 import java.util.List;
+
+import com.yyy.system.api.vo.SysDeptVO;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +22,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDept;
+
 import com.yyy.system.service.ISysDeptService;
 
 /**
@@ -40,9 +42,9 @@ public class SysDeptController extends BaseController
      */
     @RequiresPermissions("system:dept:list")
     @GetMapping("/list")
-    public AjaxResult list(SysDept dept)
+    public AjaxResult list(SysDeptVO dept)
     {
-        List<SysDept> depts = deptService.selectDeptList(dept);
+        List<SysDeptVO> depts = deptService.selectDeptList(dept);
         return success(depts);
     }
 
@@ -53,7 +55,7 @@ public class SysDeptController extends BaseController
     @GetMapping("/list/exclude/{deptId}")
     public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
     {
-        List<SysDept> depts = deptService.selectDeptList(new SysDept());
+        List<SysDeptVO> depts = deptService.selectDeptList(new SysDeptVO());
         depts.removeIf(d -> d.getDeptId().intValue() == deptId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
         return success(depts);
     }
@@ -75,7 +77,7 @@ public class SysDeptController extends BaseController
     @RequiresPermissions("system:dept:add")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDept dept)
+    public AjaxResult add(@Validated @RequestBody SysDeptVO dept)
     {
         if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept)))
         {
@@ -91,7 +93,7 @@ public class SysDeptController extends BaseController
     @RequiresPermissions("system:dept:edit")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDept dept)
+    public AjaxResult edit(@Validated @RequestBody SysDeptVO dept)
     {
         Long deptId = dept.getDeptId();
         deptService.checkDeptDataScope(deptId);

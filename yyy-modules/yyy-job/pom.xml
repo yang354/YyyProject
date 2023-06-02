@@ -77,6 +77,11 @@
             <groupId>com.yzz</groupId>
             <artifactId>yzz-common-swagger</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-datasource</artifactId>
+        </dependency>
         
     </dependencies>
 

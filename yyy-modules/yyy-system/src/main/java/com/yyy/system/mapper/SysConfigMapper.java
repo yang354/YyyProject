@@ -1,14 +1,17 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.domain.SysConfig;
+import com.yyy.system.vo.SysConfigVO;
 
 /**
  * 参数配置 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysConfigMapper
+public interface SysConfigMapper extends BaseMapperPlus<SysConfig>
 {
     /**
      * 查询参数配置信息
@@ -16,7 +19,7 @@ public interface SysConfigMapper
      * @param config 参数配置信息
      * @return 参数配置信息
      */
-    public SysConfig selectConfig(SysConfig config);
+    public SysConfigVO selectConfig(SysConfigVO config);
 
     /**
      * 通过ID查询配置
@@ -24,7 +27,7 @@ public interface SysConfigMapper
      * @param configId 参数ID
      * @return 参数配置信息
      */
-    public SysConfig selectConfigById(Long configId);
+    public SysConfigVO selectConfigById(Long configId);
 
     /**
      * 查询参数配置列表
@@ -32,7 +35,7 @@ public interface SysConfigMapper
      * @param config 参数配置信息
      * @return 参数配置集合
      */
-    public List<SysConfig> selectConfigList(SysConfig config);
+    public List<SysConfigVO> selectConfigList(SysConfigVO config);
 
     /**
      * 根据键名查询参数配置信息
@@ -40,7 +43,7 @@ public interface SysConfigMapper
      * @param configKey 参数键名
      * @return 参数配置信息
      */
-    public SysConfig checkConfigKeyUnique(String configKey);
+    public SysConfigVO checkConfigKeyUnique(String configKey);
 
     /**
      * 新增参数配置
@@ -48,7 +51,7 @@ public interface SysConfigMapper
      * @param config 参数配置信息
      * @return 结果
      */
-    public int insertConfig(SysConfig config);
+    public int insertConfig(SysConfigVO config);
 
     /**
      * 修改参数配置
@@ -56,7 +59,7 @@ public interface SysConfigMapper
      * @param config 参数配置信息
      * @return 结果
      */
-    public int updateConfig(SysConfig config);
+    public int updateConfig(SysConfigVO config);
 
     /**
      * 删除参数配置

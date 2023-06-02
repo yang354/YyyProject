@@ -1,21 +1,26 @@
 package com.yyy.system.mapper;
 
-import java.util.List;
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.api.domain.SysDictType;
 import com.yyy.system.api.domain.SysLogininfor;
+import com.yyy.system.api.vo.SysLogininforVO;
+
+import java.util.List;
+
 
 /**
  * 系统访问日志情况信息 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysLogininforMapper
+public interface SysLogininforMapper extends BaseMapperPlus<SysLogininfor>
 {
     /**
      * 新增系统登录日志
      * 
      * @param logininfor 访问日志对象
      */
-    public int insertLogininfor(SysLogininfor logininfor);
+    public int insertLogininfor(SysLogininforVO logininfor);
 
     /**
      * 查询系统登录日志集合
@@ -23,7 +28,7 @@ public interface SysLogininforMapper
      * @param logininfor 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor);
+    public List<SysLogininforVO> selectLogininforList(SysLogininforVO logininfor);
 
     /**
      * 批量删除系统登录日志

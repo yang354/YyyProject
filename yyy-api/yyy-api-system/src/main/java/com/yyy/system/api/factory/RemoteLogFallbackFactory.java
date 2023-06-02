@@ -1,13 +1,15 @@
 package com.yyy.system.api.factory;
 
+import com.yyy.system.api.vo.SysLogininforVO;
+import com.yyy.system.api.vo.SysOperLogVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 import com.yyy.common.core.domain.R;
 import com.yyy.system.api.RemoteLogService;
-import com.yyy.system.api.domain.SysLogininfor;
-import com.yyy.system.api.domain.SysOperLog;
+
+
 
 /**
  * 日志服务降级处理
@@ -26,13 +28,13 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
         return new RemoteLogService()
         {
             @Override
-            public R<Boolean> saveLog(SysOperLog sysOperLog, String source)
+            public R<Boolean> saveLog(SysOperLogVO SysOperLogVO, String source)
             {
                 return null;
             }
 
             @Override
-            public R<Boolean> saveLogininfor(SysLogininfor sysLogininfor, String source)
+            public R<Boolean> saveLogininfor(SysLogininforVO SysLogininforVO, String source)
             {
                 return null;
             }

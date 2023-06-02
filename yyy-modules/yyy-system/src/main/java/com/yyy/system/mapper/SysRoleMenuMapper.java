@@ -1,6 +1,8 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.domain.SysRoleMenu;
 
 /**
@@ -8,7 +10,7 @@ import com.yyy.system.domain.SysRoleMenu;
  * 
 * @author 羊扬杨
  */
-public interface SysRoleMenuMapper
+public interface SysRoleMenuMapper extends BaseMapperPlus<SysRoleMenu>
 {
     /**
      * 查询菜单使用数量

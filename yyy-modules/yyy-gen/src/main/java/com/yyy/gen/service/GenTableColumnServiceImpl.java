@@ -1,10 +1,14 @@
 package com.yyy.gen.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.gen.domain.GenTableColumn;
+import com.yyy.system.api.vo.SysDeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yyy.common.core.text.Convert;
-import com.yyy.gen.domain.GenTableColumn;
+import com.yyy.gen.vo.GenTableColumnVO;
 import com.yyy.gen.mapper.GenTableColumnMapper;
 
 /**
@@ -13,7 +17,7 @@ import com.yyy.gen.mapper.GenTableColumnMapper;
 * @author 羊扬杨
  */
 @Service
-public class GenTableColumnServiceImpl implements IGenTableColumnService 
+public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn> implements IGenTableColumnService
 {
 	@Autowired
 	private GenTableColumnMapper genTableColumnMapper;
@@ -25,7 +29,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService
      * @return 业务字段集合
      */
 	@Override
-	public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId)
+	public List<GenTableColumnVO> selectGenTableColumnListByTableId(Long tableId)
 	{
 	    return genTableColumnMapper.selectGenTableColumnListByTableId(tableId);
 	}
@@ -33,25 +37,25 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService
     /**
      * 新增业务字段
      * 
-     * @param genTableColumn 业务字段信息
+     * @param GenTableColumnVO 业务字段信息
      * @return 结果
      */
 	@Override
-	public int insertGenTableColumn(GenTableColumn genTableColumn)
+	public int insertGenTableColumn(GenTableColumnVO GenTableColumnVO)
 	{
-	    return genTableColumnMapper.insertGenTableColumn(genTableColumn);
+	    return genTableColumnMapper.insertGenTableColumn(GenTableColumnVO);
 	}
 	
 	/**
      * 修改业务字段
      * 
-     * @param genTableColumn 业务字段信息
+     * @param GenTableColumnVO 业务字段信息
      * @return 结果
      */
 	@Override
-	public int updateGenTableColumn(GenTableColumn genTableColumn)
+	public int updateGenTableColumn(GenTableColumnVO GenTableColumnVO)
 	{
-	    return genTableColumnMapper.updateGenTableColumn(genTableColumn);
+	    return genTableColumnMapper.updateGenTableColumn(GenTableColumnVO);
 	}
 
 	/**

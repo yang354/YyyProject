@@ -1,14 +1,17 @@
 package com.yyy.system.service;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.IServicePlus;
 import com.yyy.system.domain.SysConfig;
+import com.yyy.system.vo.SysConfigVO;
 
 /**
  * 参数配置 服务层
  * 
 * @author 羊扬杨
  */
-public interface ISysConfigService
+public interface ISysConfigService extends IServicePlus<SysConfig>
 {
     /**
      * 查询参数配置信息
@@ -16,7 +19,7 @@ public interface ISysConfigService
      * @param configId 参数配置ID
      * @return 参数配置信息
      */
-    public SysConfig selectConfigById(Long configId);
+    public SysConfigVO selectConfigById(Long configId);
 
     /**
      * 根据键名查询参数配置信息
@@ -32,7 +35,7 @@ public interface ISysConfigService
      * @param config 参数配置信息
      * @return 参数配置集合
      */
-    public List<SysConfig> selectConfigList(SysConfig config);
+    public List<SysConfigVO> selectConfigList(SysConfigVO config);
 
     /**
      * 新增参数配置
@@ -40,7 +43,7 @@ public interface ISysConfigService
      * @param config 参数配置信息
      * @return 结果
      */
-    public int insertConfig(SysConfig config);
+    public int insertConfig(SysConfigVO config);
 
     /**
      * 修改参数配置
@@ -48,7 +51,7 @@ public interface ISysConfigService
      * @param config 参数配置信息
      * @return 结果
      */
-    public int updateConfig(SysConfig config);
+    public int updateConfig(SysConfigVO config);
 
     /**
      * 批量删除参数信息
@@ -78,5 +81,5 @@ public interface ISysConfigService
      * @param config 参数信息
      * @return 结果
      */
-    public String checkConfigKeyUnique(SysConfig config);
+    public String checkConfigKeyUnique(SysConfigVO config);
 }

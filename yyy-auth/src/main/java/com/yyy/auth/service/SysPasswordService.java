@@ -1,6 +1,8 @@
 package com.yyy.auth.service;
 
 import java.util.concurrent.TimeUnit;
+
+import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.yyy.common.core.constant.CacheConstants;
@@ -8,7 +10,7 @@ import com.yyy.common.core.constant.Constants;
 import com.yyy.common.core.exception.ServiceException;
 import com.yyy.common.redis.service.RedisService;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysUser;
+
 
 /**
  * 登录密码方法
@@ -39,7 +41,7 @@ public class SysPasswordService
         return CacheConstants.PWD_ERR_CNT_KEY + username;
     }
 
-    public void validate(SysUser user, String password)
+    public void validate(SysUserVO user, String password)
     {
         String username = user.getUserName();
 
@@ -70,7 +72,7 @@ public class SysPasswordService
         }
     }
 
-    public boolean matches(SysUser user, String rawPassword)
+    public boolean matches(SysUserVO user, String rawPassword)
     {
         return SecurityUtils.matchesPassword(rawPassword, user.getPassword());
     }

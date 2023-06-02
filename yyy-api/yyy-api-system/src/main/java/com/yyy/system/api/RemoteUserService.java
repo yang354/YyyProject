@@ -1,5 +1,6 @@
 package com.yyy.system.api;
 
+import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import com.yyy.common.core.constant.SecurityConstants;
 import com.yyy.common.core.constant.ServiceNameConstants;
 import com.yyy.common.core.domain.R;
-import com.yyy.system.api.domain.SysUser;
 import com.yyy.system.api.factory.RemoteUserFallbackFactory;
 import com.yyy.system.api.model.LoginUser;
 
@@ -34,10 +34,10 @@ public interface RemoteUserService
     /**
      * 注册用户信息
      *
-     * @param sysUser 用户信息
+     * @param SysUserVO 用户信息
      * @param source 请求来源
      * @return 结果
      */
     @PostMapping("/user/register")
-    public R<Boolean> registerUserInfo(@RequestBody SysUser sysUser, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    public R<Boolean> registerUserInfo(@RequestBody SysUserVO SysUserVO, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 }

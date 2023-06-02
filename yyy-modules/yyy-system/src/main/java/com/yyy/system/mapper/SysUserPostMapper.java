@@ -1,6 +1,8 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.domain.SysUserPost;
 
 /**
@@ -8,7 +10,7 @@ import com.yyy.system.domain.SysUserPost;
  * 
 * @author 羊扬杨
  */
-public interface SysUserPostMapper
+public interface SysUserPostMapper extends BaseMapperPlus<SysUserPost>
 {
     /**
      * 通过用户ID删除用户和岗位关联

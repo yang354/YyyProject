@@ -3,7 +3,7 @@ package com.yyy.job.util;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 
 /**
  * 定时任务处理（禁止并发执行）
@@ -15,8 +15,8 @@ import com.yyy.job.domain.SysJob;
 public class QuartzDisallowConcurrentExecution extends AbstractQuartzJob
 {
     @Override
-    protected void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception
+    protected void doExecute(JobExecutionContext context, SysJobVO sysJobVO) throws Exception
     {
-        JobInvokeUtil.invokeMethod(sysJob);
+        JobInvokeUtil.invokeMethod(sysJobVO);
     }
 }

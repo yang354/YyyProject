@@ -20,7 +20,7 @@ import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.redis.service.RedisService;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.system.api.model.LoginUser;
-import com.yyy.system.domain.SysUserOnline;
+import com.yyy.system.vo.SysUserOnlineVO;
 import com.yyy.system.service.ISysUserOnlineService;
 
 /**
@@ -43,7 +43,7 @@ public class SysUserOnlineController extends BaseController
     public TableDataInfo list(String ipaddr, String userName)
     {
         Collection<String> keys = redisService.keys(CacheConstants.LOGIN_TOKEN_KEY + "*");
-        List<SysUserOnline> userOnlineList = new ArrayList<SysUserOnline>();
+        List<SysUserOnlineVO> userOnlineList = new ArrayList<SysUserOnlineVO>();
         for (String key : keys)
         {
             LoginUser user = redisService.getCacheObject(key);

@@ -1,6 +1,10 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.api.vo.SysDictDataVO;
+import com.yyy.system.domain.SysConfig;
 import org.apache.ibatis.annotations.Param;
 import com.yyy.system.api.domain.SysDictData;
 
@@ -9,7 +13,7 @@ import com.yyy.system.api.domain.SysDictData;
  * 
 * @author 羊扬杨
  */
-public interface SysDictDataMapper
+public interface SysDictDataMapper extends BaseMapperPlus<SysDictData>
 {
     /**
      * 根据条件分页查询字典数据
@@ -17,7 +21,7 @@ public interface SysDictDataMapper
      * @param dictData 字典数据信息
      * @return 字典数据集合信息
      */
-    public List<SysDictData> selectDictDataList(SysDictData dictData);
+    public List<SysDictDataVO> selectDictDataList(SysDictDataVO dictData);
 
     /**
      * 根据字典类型查询字典数据
@@ -25,7 +29,7 @@ public interface SysDictDataMapper
      * @param dictType 字典类型
      * @return 字典数据集合信息
      */
-    public List<SysDictData> selectDictDataByType(String dictType);
+    public List<SysDictDataVO> selectDictDataByType(String dictType);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息
@@ -42,7 +46,7 @@ public interface SysDictDataMapper
      * @param dictCode 字典数据ID
      * @return 字典数据
      */
-    public SysDictData selectDictDataById(Long dictCode);
+    public SysDictDataVO selectDictDataById(Long dictCode);
 
     /**
      * 查询字典数据
@@ -74,7 +78,7 @@ public interface SysDictDataMapper
      * @param dictData 字典数据信息
      * @return 结果
      */
-    public int insertDictData(SysDictData dictData);
+    public int insertDictData(SysDictDataVO dictData);
 
     /**
      * 修改字典数据信息
@@ -82,7 +86,7 @@ public interface SysDictDataMapper
      * @param dictData 字典数据信息
      * @return 结果
      */
-    public int updateDictData(SysDictData dictData);
+    public int updateDictData(SysDictDataVO dictData);
 
     /**
      * 同步修改字典类型

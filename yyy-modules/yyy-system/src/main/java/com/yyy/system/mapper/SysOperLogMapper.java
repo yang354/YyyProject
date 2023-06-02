@@ -1,21 +1,25 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.api.vo.SysOperLogVO;
+import com.yyy.system.domain.SysNotice;
 
 /**
  * 操作日志 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysOperLogMapper
+public interface SysOperLogMapper extends BaseMapperPlus<SysOperLog>
 {
     /**
      * 新增操作日志
      * 
      * @param operLog 操作日志对象
      */
-    public int insertOperlog(SysOperLog operLog);
+    public int insertOperlog(SysOperLogVO operLog);
 
     /**
      * 查询系统操作日志集合
@@ -23,7 +27,7 @@ public interface SysOperLogMapper
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+    public List<SysOperLogVO> selectOperLogList(SysOperLogVO operLog);
 
     /**
      * 批量删除系统操作日志
@@ -39,7 +43,7 @@ public interface SysOperLogMapper
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    public SysOperLog selectOperLogById(Long operId);
+    public SysOperLogVO selectOperLogById(Long operId);
 
     /**
      * 清空操作日志

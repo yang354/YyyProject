@@ -1,14 +1,19 @@
 package com.yyy.system.mapper;
 
-import java.util.List;
+
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.api.vo.SysDictTypeVO;
 import com.yyy.system.api.domain.SysDictType;
+import java.util.List;
+
 
 /**
  * 字典表 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysDictTypeMapper
+public interface SysDictTypeMapper extends BaseMapperPlus<SysDictType>
 {
     /**
      * 根据条件分页查询字典类型
@@ -16,14 +21,14 @@ public interface SysDictTypeMapper
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
-    public List<SysDictType> selectDictTypeList(SysDictType dictType);
+    public List<SysDictTypeVO> selectDictTypeList(SysDictTypeVO dictType);
 
     /**
      * 根据所有字典类型
      * 
      * @return 字典类型集合信息
      */
-    public List<SysDictType> selectDictTypeAll();
+    public List<SysDictTypeVO> selectDictTypeAll();
 
     /**
      * 根据字典类型ID查询信息
@@ -31,7 +36,7 @@ public interface SysDictTypeMapper
      * @param dictId 字典类型ID
      * @return 字典类型
      */
-    public SysDictType selectDictTypeById(Long dictId);
+    public SysDictTypeVO selectDictTypeById(Long dictId);
 
     /**
      * 根据字典类型查询信息
@@ -39,7 +44,7 @@ public interface SysDictTypeMapper
      * @param dictType 字典类型
      * @return 字典类型
      */
-    public SysDictType selectDictTypeByType(String dictType);
+    public SysDictTypeVO selectDictTypeByType(String dictType);
 
     /**
      * 通过字典ID删除字典信息
@@ -63,7 +68,7 @@ public interface SysDictTypeMapper
      * @param dictType 字典类型信息
      * @return 结果
      */
-    public int insertDictType(SysDictType dictType);
+    public int insertDictType(SysDictTypeVO dictType);
 
     /**
      * 修改字典类型信息
@@ -71,7 +76,7 @@ public interface SysDictTypeMapper
      * @param dictType 字典类型信息
      * @return 结果
      */
-    public int updateDictType(SysDictType dictType);
+    public int updateDictType(SysDictTypeVO dictType);
 
     /**
      * 校验字典类型称是否唯一
@@ -79,5 +84,5 @@ public interface SysDictTypeMapper
      * @param dictType 字典类型
      * @return 结果
      */
-    public SysDictType checkDictTypeUnique(String dictType);
+    public SysDictTypeVO checkDictTypeUnique(String dictType);
 }

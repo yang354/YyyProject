@@ -2,6 +2,7 @@ package com.yyy.system.service;
 
 import java.util.List;
 import com.yyy.system.api.domain.SysDictData;
+import com.yyy.system.api.vo.SysDictDataVO;
 
 /**
  * 字典 业务层
@@ -16,7 +17,7 @@ public interface ISysDictDataService
      * @param dictData 字典数据信息
      * @return 字典数据集合信息
      */
-    public List<SysDictData> selectDictDataList(SysDictData dictData);
+    public List<SysDictDataVO> selectDictDataList(SysDictDataVO dictData);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息
@@ -33,7 +34,7 @@ public interface ISysDictDataService
      * @param dictCode 字典数据ID
      * @return 字典数据
      */
-    public SysDictData selectDictDataById(Long dictCode);
+    public SysDictDataVO selectDictDataById(Long dictCode);
 
     /**
      * 批量删除字典数据信息
@@ -48,7 +49,7 @@ public interface ISysDictDataService
      * @param dictData 字典数据信息
      * @return 结果
      */
-    public int insertDictData(SysDictData dictData);
+    public int insertDictData(SysDictDataVO dictData);
 
     /**
      * 修改保存字典数据信息
@@ -56,5 +57,5 @@ public interface ISysDictDataService
      * @param dictData 字典数据信息
      * @return 结果
      */
-    public int updateDictData(SysDictData dictData);
+    public int updateDictData(SysDictDataVO dictData);
 }

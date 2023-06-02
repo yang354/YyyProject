@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.yyy.common.core.constant.SecurityConstants;
 import com.yyy.system.api.RemoteLogService;
-import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.api.vo.SysOperLogVO;
 
 /**
  * 异步调用日志服务
@@ -22,8 +22,8 @@ public class AsyncLogService
      * 保存系统日志记录
      */
     @Async
-    public void saveSysLog(SysOperLog sysOperLog)
+    public void saveSysLog(SysOperLogVO SysOperLogVO)
     {
-        remoteLogService.saveLog(sysOperLog, SecurityConstants.INNER);
+        remoteLogService.saveLog(SysOperLogVO, SecurityConstants.INNER);
     }
 }

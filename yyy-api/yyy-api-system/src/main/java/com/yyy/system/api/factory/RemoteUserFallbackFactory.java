@@ -1,12 +1,13 @@
 package com.yyy.system.api.factory;
 
+import com.yyy.system.api.vo.SysUserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 import com.yyy.common.core.domain.R;
 import com.yyy.system.api.RemoteUserService;
-import com.yyy.system.api.domain.SysUser;
+
 import com.yyy.system.api.model.LoginUser;
 
 /**
@@ -32,7 +33,7 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
             }
 
             @Override
-            public R<Boolean> registerUserInfo(SysUser sysUser, String source)
+            public R<Boolean> registerUserInfo(SysUserVO SysUserVO, String source)
             {
                 return R.fail("注册用户失败:" + throwable.getMessage());
             }

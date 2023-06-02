@@ -18,7 +18,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.InnerAuth;
 import com.yyy.common.security.annotation.RequiresPermissions;
-import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.api.vo.SysOperLogVO;
 import com.yyy.system.service.ISysOperLogService;
 
 /**
@@ -35,20 +35,20 @@ public class SysOperlogController extends BaseController
 
     @RequiresPermissions("system:operlog:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysOperLog operLog)
+    public TableDataInfo list(SysOperLogVO operLog)
     {
         startPage();
-        List<SysOperLog> list = operLogService.selectOperLogList(operLog);
+        List<SysOperLogVO> list = operLogService.selectOperLogList(operLog);
         return getDataTable(list);
     }
 
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:operlog:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysOperLog operLog)
+    public void export(HttpServletResponse response, SysOperLogVO operLog)
     {
-        List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-        ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
+        List<SysOperLogVO> list = operLogService.selectOperLogList(operLog);
+        ExcelUtil<SysOperLogVO> util = new ExcelUtil<SysOperLogVO>(SysOperLogVO.class);
         util.exportExcel(response, list, "操作日志");
     }
 
@@ -71,7 +71,7 @@ public class SysOperlogController extends BaseController
 
     @InnerAuth
     @PostMapping
-    public AjaxResult add(@RequestBody SysOperLog operLog)
+    public AjaxResult add(@RequestBody SysOperLogVO operLog)
     {
         return toAjax(operLogService.insertOperlog(operLog));
     }

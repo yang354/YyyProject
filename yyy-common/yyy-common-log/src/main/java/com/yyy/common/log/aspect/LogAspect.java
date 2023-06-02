@@ -24,7 +24,7 @@ import com.yyy.common.log.enums.BusinessStatus;
 import com.yyy.common.log.filter.PropertyPreExcludeFilter;
 import com.yyy.common.log.service.AsyncLogService;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.api.vo.SysOperLogVO;
 
 /**
  * 操作日志记录处理
@@ -71,7 +71,7 @@ public class LogAspect
         try
         {
             // *========数据库日志=========*//
-            SysOperLog operLog = new SysOperLog();
+            SysOperLogVO operLog = new SysOperLogVO();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
@@ -114,7 +114,7 @@ public class LogAspect
      * @param operLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) throws Exception
+    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLogVO operLog, Object jsonResult) throws Exception
     {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
@@ -141,7 +141,7 @@ public class LogAspect
      * @param operLog 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) throws Exception
+    private void setRequestValue(JoinPoint joinPoint, SysOperLogVO operLog) throws Exception
     {
         String requestMethod = operLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod))

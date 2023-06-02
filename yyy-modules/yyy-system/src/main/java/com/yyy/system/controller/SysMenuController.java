@@ -19,7 +19,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.domain.SysMenu;
+import com.yyy.system.vo.SysMenuVO;
 import com.yyy.system.service.ISysMenuService;
 
 /**
@@ -39,10 +39,10 @@ public class SysMenuController extends BaseController
      */
     @RequiresPermissions("system:menu:list")
     @GetMapping("/list")
-    public AjaxResult list(SysMenu menu)
+    public AjaxResult list(SysMenuVO menu)
     {
         Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        List<SysMenuVO> menus = menuService.selectMenuList(menu, userId);
         return success(menus);
     }
 
@@ -60,10 +60,10 @@ public class SysMenuController extends BaseController
      * 获取菜单下拉树列表
      */
     @GetMapping("/treeselect")
-    public AjaxResult treeselect(SysMenu menu)
+    public AjaxResult treeselect(SysMenuVO menu)
     {
         Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(menu, userId);
+        List<SysMenuVO> menus = menuService.selectMenuList(menu, userId);
         return success(menuService.buildMenuTreeSelect(menus));
     }
 
@@ -74,7 +74,7 @@ public class SysMenuController extends BaseController
     public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)
     {
         Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = menuService.selectMenuList(userId);
+        List<SysMenuVO> menus = menuService.selectMenuList(userId);
         AjaxResult ajax = AjaxResult.success();
         ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
         ajax.put("menus", menuService.buildMenuTreeSelect(menus));
@@ -87,7 +87,7 @@ public class SysMenuController extends BaseController
     @RequiresPermissions("system:menu:add")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysMenu menu)
+    public AjaxResult add(@Validated @RequestBody SysMenuVO menu)
     {
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu)))
         {
@@ -107,7 +107,7 @@ public class SysMenuController extends BaseController
     @RequiresPermissions("system:menu:edit")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysMenu menu)
+    public AjaxResult edit(@Validated @RequestBody SysMenuVO menu)
     {
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu)))
         {
@@ -153,7 +153,7 @@ public class SysMenuController extends BaseController
     public AjaxResult getRouters()
     {
         Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
+        List<SysMenuVO> menus = menuService.selectMenuTreeByUserId(userId);
         return success(menuService.buildMenus(menus));
     }
 }

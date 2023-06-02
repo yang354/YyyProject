@@ -2,7 +2,8 @@ package com.yyy.system.service;
 
 import java.util.Set;
 
-import com.yyy.system.api.domain.SysUser;
+
+import com.yyy.system.api.vo.SysUserVO;
 
 /**
  * 权限信息 服务层
@@ -17,7 +18,7 @@ public interface ISysPermissionService
      * @param userId 用户Id
      * @return 角色权限信息
      */
-    public Set<String> getRolePermission(SysUser user);
+    public Set<String> getRolePermission(SysUserVO user);
 
     /**
      * 获取菜单数据权限
@@ -25,5 +26,5 @@ public interface ISysPermissionService
      * @param userId 用户Id
      * @return 菜单权限信息
      */
-    public Set<String> getMenuPermission(SysUser user);
+    public Set<String> getMenuPermission(SysUserVO user);
 }

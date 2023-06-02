@@ -1,6 +1,8 @@
 package com.yyy.system.controller;
 
 import java.util.Arrays;
+
+import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,6 @@ import com.yyy.common.security.service.TokenService;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.system.api.RemoteFileService;
 import com.yyy.system.api.domain.SysFile;
-import com.yyy.system.api.domain.SysUser;
 import com.yyy.system.api.model.LoginUser;
 import com.yyy.system.service.ISysUserService;
 
@@ -52,7 +53,7 @@ public class SysProfileController extends BaseController
     public AjaxResult profile()
     {
         String username = SecurityUtils.getUsername();
-        SysUser user = userService.selectUserByUserName(username);
+        SysUserVO user = userService.selectUserByUserName(username);
         AjaxResult ajax = AjaxResult.success(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(username));
         ajax.put("postGroup", userService.selectUserPostGroup(username));
@@ -64,11 +65,11 @@ public class SysProfileController extends BaseController
      */
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult updateProfile(@RequestBody SysUser user)
+    public AjaxResult updateProfile(@RequestBody SysUserVO user)
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        SysUser sysUser = loginUser.getSysUser();
-        user.setUserName(sysUser.getUserName());
+        SysUserVO SysUserVO = loginUser.getSysUserVO();
+        user.setUserName(SysUserVO.getUserName());
         if (StringUtils.isNotEmpty(user.getPhonenumber())
                 && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user)))
         {
@@ -79,17 +80,17 @@ public class SysProfileController extends BaseController
         {
             return error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        user.setUserId(sysUser.getUserId());
+        user.setUserId(SysUserVO.getUserId());
         user.setPassword(null);
         user.setAvatar(null);
         user.setDeptId(null);
         if (userService.updateUserProfile(user) > 0)
         {
             // 更新缓存用户信息
-            loginUser.getSysUser().setNickName(user.getNickName());
-            loginUser.getSysUser().setPhonenumber(user.getPhonenumber());
-            loginUser.getSysUser().setEmail(user.getEmail());
-            loginUser.getSysUser().setSex(user.getSex());
+            loginUser.getSysUserVO().setNickName(user.getNickName());
+            loginUser.getSysUserVO().setPhonenumber(user.getPhonenumber());
+            loginUser.getSysUserVO().setEmail(user.getEmail());
+            loginUser.getSysUserVO().setSex(user.getSex());
             tokenService.setLoginUser(loginUser);
             return success();
         }
@@ -104,7 +105,7 @@ public class SysProfileController extends BaseController
     public AjaxResult updatePwd(String oldPassword, String newPassword)
     {
         String username = SecurityUtils.getUsername();
-        SysUser user = userService.selectUserByUserName(username);
+        SysUserVO user = userService.selectUserByUserName(username);
         String password = user.getPassword();
         if (!SecurityUtils.matchesPassword(oldPassword, password))
         {
@@ -118,7 +119,7 @@ public class SysProfileController extends BaseController
         {
             // 更新缓存用户密码
             LoginUser loginUser = SecurityUtils.getLoginUser();
-            loginUser.getSysUser().setPassword(SecurityUtils.encryptPassword(newPassword));
+            loginUser.getSysUserVO().setPassword(SecurityUtils.encryptPassword(newPassword));
             tokenService.setLoginUser(loginUser);
             return success();
         }
@@ -151,7 +152,7 @@ public class SysProfileController extends BaseController
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", url);
                 // 更新缓存用户头像
-                loginUser.getSysUser().setAvatar(url);
+                loginUser.getSysUserVO().setAvatar(url);
                 tokenService.setLoginUser(loginUser);
                 return ajax;
             }

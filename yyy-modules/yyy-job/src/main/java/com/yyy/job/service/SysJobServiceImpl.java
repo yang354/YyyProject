@@ -2,6 +2,11 @@ package com.yyy.job.service;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.job.domain.SysJob;
+import com.yyy.job.domain.SysJobLog;
+import com.yyy.job.mapper.SysJobLogMapper;
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
@@ -11,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.yyy.common.core.constant.ScheduleConstants;
 import com.yyy.common.core.exception.job.TaskException;
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 import com.yyy.job.mapper.SysJobMapper;
 import com.yyy.job.util.CronUtils;
 import com.yyy.job.util.ScheduleUtils;
@@ -22,7 +27,7 @@ import com.yyy.job.util.ScheduleUtils;
 * @author 羊扬杨
  */
 @Service
-public class SysJobServiceImpl implements ISysJobService
+public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> implements ISysJobService
 {
     @Autowired
     private Scheduler scheduler;
@@ -37,8 +42,8 @@ public class SysJobServiceImpl implements ISysJobService
     public void init() throws SchedulerException, TaskException
     {
         scheduler.clear();
-        List<SysJob> jobList = jobMapper.selectJobAll();
-        for (SysJob job : jobList)
+        List<SysJobVO> jobList = jobMapper.selectJobAll();
+        for (SysJobVO job : jobList)
         {
             ScheduleUtils.createScheduleJob(scheduler, job);
         }
@@ -51,7 +56,7 @@ public class SysJobServiceImpl implements ISysJobService
      * @return
      */
     @Override
-    public List<SysJob> selectJobList(SysJob job)
+    public List<SysJobVO> selectJobList(SysJobVO job)
     {
         return jobMapper.selectJobList(job);
     }
@@ -63,7 +68,7 @@ public class SysJobServiceImpl implements ISysJobService
      * @return 调度任务对象信息
      */
     @Override
-    public SysJob selectJobById(Long jobId)
+    public SysJobVO selectJobById(Long jobId)
     {
         return jobMapper.selectJobById(jobId);
     }
@@ -75,7 +80,7 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int pauseJob(SysJob job) throws SchedulerException
+    public int pauseJob(SysJobVO job) throws SchedulerException
     {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
@@ -95,7 +100,7 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int resumeJob(SysJob job) throws SchedulerException
+    public int resumeJob(SysJobVO job) throws SchedulerException
     {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
@@ -115,7 +120,7 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteJob(SysJob job) throws SchedulerException
+    public int deleteJob(SysJobVO job) throws SchedulerException
     {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
@@ -139,7 +144,7 @@ public class SysJobServiceImpl implements ISysJobService
     {
         for (Long jobId : jobIds)
         {
-            SysJob job = jobMapper.selectJobById(jobId);
+            SysJobVO job = jobMapper.selectJobById(jobId);
             deleteJob(job);
         }
     }
@@ -151,7 +156,7 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int changeStatus(SysJob job) throws SchedulerException
+    public int changeStatus(SysJobVO job) throws SchedulerException
     {
         int rows = 0;
         String status = job.getStatus();
@@ -173,12 +178,12 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean run(SysJob job) throws SchedulerException
+    public boolean run(SysJobVO job) throws SchedulerException
     {
         boolean result = false;
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        SysJob properties = selectJobById(job.getJobId());
+        SysJobVO properties = selectJobById(job.getJobId());
         // 参数
         JobDataMap dataMap = new JobDataMap();
         dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
@@ -198,7 +203,7 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insertJob(SysJob job) throws SchedulerException, TaskException
+    public int insertJob(SysJobVO job) throws SchedulerException, TaskException
     {
         job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         int rows = jobMapper.insertJob(job);
@@ -216,9 +221,9 @@ public class SysJobServiceImpl implements ISysJobService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateJob(SysJob job) throws SchedulerException, TaskException
+    public int updateJob(SysJobVO job) throws SchedulerException, TaskException
     {
-        SysJob properties = selectJobById(job.getJobId());
+        SysJobVO properties = selectJobById(job.getJobId());
         int rows = jobMapper.updateJob(job);
         if (rows > 0)
         {
@@ -233,7 +238,7 @@ public class SysJobServiceImpl implements ISysJobService
      * @param job 任务对象
      * @param jobGroup 任务组名
      */
-    public void updateSchedulerJob(SysJob job, String jobGroup) throws SchedulerException, TaskException
+    public void updateSchedulerJob(SysJobVO job, String jobGroup) throws SchedulerException, TaskException
     {
         Long jobId = job.getJobId();
         // 判断是否存在

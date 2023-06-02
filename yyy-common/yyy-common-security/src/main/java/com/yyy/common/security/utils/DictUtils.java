@@ -8,6 +8,7 @@ import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.redis.service.RedisService;
 import com.yyy.system.api.domain.SysDictData;
+import com.yyy.system.api.vo.SysDictDataVO;
 
 /**
  * 字典工具类
@@ -22,7 +23,7 @@ public class DictUtils
      * @param key 参数键
      * @param dictDatas 字典数据列表
      */
-    public static void setDictCache(String key, List<SysDictData> dictDatas)
+    public static void setDictCache(String key, List<SysDictDataVO> dictDatas)
     {
         SpringUtils.getBean(RedisService.class).setCacheObject(getCacheKey(key), dictDatas);
     }
@@ -33,12 +34,12 @@ public class DictUtils
      * @param key 参数键
      * @return dictDatas 字典数据列表
      */
-    public static List<SysDictData> getDictCache(String key)
+    public static List<SysDictDataVO> getDictCache(String key)
     {
         JSONArray arrayCache = SpringUtils.getBean(RedisService.class).getCacheObject(getCacheKey(key));
         if (StringUtils.isNotNull(arrayCache))
         {
-            return arrayCache.toList(SysDictData.class);
+            return arrayCache.toList(SysDictDataVO.class);
         }
         return null;
     }

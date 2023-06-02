@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.system.api.domain.SysRole;
+import com.yyy.system.api.vo.SysUserVO;
+import com.yyy.system.mapper.*;
+import com.yyy.system.service.ISysPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,15 +20,10 @@ import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.datascope.annotation.DataScope;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysRole;
-import com.yyy.system.api.domain.SysUser;
+import com.yyy.system.api.vo.SysRoleVO;
 import com.yyy.system.domain.SysRoleDept;
 import com.yyy.system.domain.SysRoleMenu;
 import com.yyy.system.domain.SysUserRole;
-import com.yyy.system.mapper.SysRoleDeptMapper;
-import com.yyy.system.mapper.SysRoleMapper;
-import com.yyy.system.mapper.SysRoleMenuMapper;
-import com.yyy.system.mapper.SysUserRoleMapper;
 import com.yyy.system.service.ISysRoleService;
 
 /**
@@ -31,7 +32,7 @@ import com.yyy.system.service.ISysRoleService;
 * @author 羊扬杨
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService
 {
     @Autowired
     private SysRoleMapper roleMapper;
@@ -53,7 +54,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      */
     @Override
     @DataScope(deptAlias = "d")
-    public List<SysRole> selectRoleList(SysRole role)
+    public List<SysRoleVO> selectRoleList(SysRoleVO role)
     {
         return roleMapper.selectRoleList(role);
     }
@@ -65,13 +66,13 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 角色列表
      */
     @Override
-    public List<SysRole> selectRolesByUserId(Long userId)
+    public List<SysRoleVO> selectRolesByUserId(Long userId)
     {
-        List<SysRole> userRoles = roleMapper.selectRolePermissionByUserId(userId);
-        List<SysRole> roles = selectRoleAll();
-        for (SysRole role : roles)
+        List<SysRoleVO> userRoles = roleMapper.selectRolePermissionByUserId(userId);
+        List<SysRoleVO> roles = selectRoleAll();
+        for (SysRoleVO role : roles)
         {
-            for (SysRole userRole : userRoles)
+            for (SysRoleVO userRole : userRoles)
             {
                 if (role.getRoleId().longValue() == userRole.getRoleId().longValue())
                 {
@@ -92,9 +93,9 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Override
     public Set<String> selectRolePermissionByUserId(Long userId)
     {
-        List<SysRole> perms = roleMapper.selectRolePermissionByUserId(userId);
+        List<SysRoleVO> perms = roleMapper.selectRolePermissionByUserId(userId);
         Set<String> permsSet = new HashSet<>();
-        for (SysRole perm : perms)
+        for (SysRoleVO perm : perms)
         {
             if (StringUtils.isNotNull(perm))
             {
@@ -110,9 +111,9 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 角色列表
      */
     @Override
-    public List<SysRole> selectRoleAll()
+    public List<SysRoleVO> selectRoleAll()
     {
-        return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
+        return SpringUtils.getAopProxy(this).selectRoleList(new SysRoleVO());
     }
 
     /**
@@ -134,7 +135,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 角色对象信息
      */
     @Override
-    public SysRole selectRoleById(Long roleId)
+    public SysRoleVO selectRoleById(Long roleId)
     {
         return roleMapper.selectRoleById(roleId);
     }
@@ -146,10 +147,10 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 结果
      */
     @Override
-    public String checkRoleNameUnique(SysRole role)
+    public String checkRoleNameUnique(SysRoleVO role)
     {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName());
+        SysRoleVO info = roleMapper.checkRoleNameUnique(role.getRoleName());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -164,10 +165,10 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 结果
      */
     @Override
-    public String checkRoleKeyUnique(SysRole role)
+    public String checkRoleKeyUnique(SysRoleVO role)
     {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        SysRoleVO info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -181,7 +182,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @param role 角色信息
      */
     @Override
-    public void checkRoleAllowed(SysRole role)
+    public void checkRoleAllowed(SysRoleVO role)
     {
         if (StringUtils.isNotNull(role.getRoleId()) && role.isAdmin())
         {
@@ -197,11 +198,11 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Override
     public void checkRoleDataScope(Long roleId)
     {
-        if (!SysUser.isAdmin(SecurityUtils.getUserId()))
+        if (!SysUserVO.isAdmin(SecurityUtils.getUserId()))
         {
-            SysRole role = new SysRole();
+            SysRoleVO role = new SysRoleVO();
             role.setRoleId(roleId);
-            List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
+            List<SysRoleVO> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
             if (StringUtils.isEmpty(roles))
             {
                 throw new ServiceException("没有权限访问角色数据！");
@@ -229,7 +230,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insertRole(SysRole role)
+    public int insertRole(SysRoleVO role)
     {
         // 新增角色信息
         roleMapper.insertRole(role);
@@ -244,7 +245,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateRole(SysRole role)
+    public int updateRole(SysRoleVO role)
     {
         // 修改角色信息
         roleMapper.updateRole(role);
@@ -260,7 +261,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 结果
      */
     @Override
-    public int updateRoleStatus(SysRole role)
+    public int updateRoleStatus(SysRoleVO role)
     {
         return roleMapper.updateRole(role);
     }
@@ -273,7 +274,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int authDataScope(SysRole role)
+    public int authDataScope(SysRoleVO role)
     {
         // 修改角色信息
         roleMapper.updateRole(role);
@@ -288,7 +289,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      * 
      * @param role 角色对象
      */
-    public int insertRoleMenu(SysRole role)
+    public int insertRoleMenu(SysRoleVO role)
     {
         int rows = 1;
         // 新增用户与角色管理
@@ -312,7 +313,7 @@ public class SysRoleServiceImpl implements ISysRoleService
      *
      * @param role 角色对象
      */
-    public int insertRoleDept(SysRole role)
+    public int insertRoleDept(SysRoleVO role)
     {
         int rows = 1;
         // 新增角色与部门（数据权限）管理
@@ -360,9 +361,9 @@ public class SysRoleServiceImpl implements ISysRoleService
     {
         for (Long roleId : roleIds)
         {
-            checkRoleAllowed(new SysRole(roleId));
+            checkRoleAllowed(new SysRoleVO(roleId));
             checkRoleDataScope(roleId);
-            SysRole role = selectRoleById(roleId);
+            SysRoleVO role = selectRoleById(roleId);
             if (countUserRoleByRoleId(roleId) > 0)
             {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", role.getRoleName()));

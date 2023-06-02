@@ -23,15 +23,15 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 import com.yyy.job.service.ISysJobService;
 import com.yyy.job.util.CronUtils;
 import com.yyy.job.util.ScheduleUtils;
 
 /**
  * 调度任务信息操作处理
- * 
-* @author 羊扬杨
+ *
+ * @author ruoyi
  */
 @RestController
 @RequestMapping("/job")
@@ -45,10 +45,10 @@ public class SysJobController extends BaseController
      */
     @RequiresPermissions("monitor:job:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysJob sysJob)
+    public TableDataInfo list(SysJobVO sysJobVO)
     {
         startPage();
-        List<SysJob> list = jobService.selectJobList(sysJob);
+        List<SysJobVO> list = jobService.selectJobList(sysJobVO);
         return getDataTable(list);
     }
 
@@ -58,10 +58,10 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:export")
     @Log(title = "定时任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysJob sysJob)
+    public void export(HttpServletResponse response, SysJobVO sysJobVO)
     {
-        List<SysJob> list = jobService.selectJobList(sysJob);
-        ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+        List<SysJobVO> list = jobService.selectJobList(sysJobVO);
+        ExcelUtil<SysJobVO> util = new ExcelUtil<SysJobVO>(SysJobVO.class);
         util.exportExcel(response, list, "定时任务");
     }
 
@@ -81,7 +81,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:add")
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException
+    public AjaxResult add(@RequestBody SysJobVO job) throws SchedulerException, TaskException
     {
         if (!CronUtils.isValid(job.getCronExpression()))
         {
@@ -117,7 +117,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:edit")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException
+    public AjaxResult edit(@RequestBody SysJobVO job) throws SchedulerException, TaskException
     {
         if (!CronUtils.isValid(job.getCronExpression()))
         {
@@ -153,9 +153,9 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:changeStatus")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException
+    public AjaxResult changeStatus(@RequestBody SysJobVO job) throws SchedulerException
     {
-        SysJob newJob = jobService.selectJobById(job.getJobId());
+        SysJobVO newJob = jobService.selectJobById(job.getJobId());
         newJob.setStatus(job.getStatus());
         return toAjax(jobService.changeStatus(newJob));
     }
@@ -166,7 +166,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:changeStatus")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/run")
-    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException
+    public AjaxResult run(@RequestBody SysJobVO job) throws SchedulerException
     {
         boolean result = jobService.run(job);
         return result ? success() : error("任务不存在或已过期！");

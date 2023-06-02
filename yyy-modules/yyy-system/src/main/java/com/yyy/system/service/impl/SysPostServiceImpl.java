@@ -1,12 +1,18 @@
 package com.yyy.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.domain.SysPost;
+import com.yyy.system.mapper.SysOperLogMapper;
+import com.yyy.system.service.ISysOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yyy.common.core.constant.UserConstants;
 import com.yyy.common.core.exception.ServiceException;
 import com.yyy.common.core.utils.StringUtils;
-import com.yyy.system.domain.SysPost;
+import com.yyy.system.vo.SysPostVO;
 import com.yyy.system.mapper.SysPostMapper;
 import com.yyy.system.mapper.SysUserPostMapper;
 import com.yyy.system.service.ISysPostService;
@@ -17,7 +23,7 @@ import com.yyy.system.service.ISysPostService;
 * @author 羊扬杨
  */
 @Service
-public class SysPostServiceImpl implements ISysPostService
+public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> implements ISysPostService
 {
     @Autowired
     private SysPostMapper postMapper;
@@ -32,7 +38,7 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 岗位信息集合
      */
     @Override
-    public List<SysPost> selectPostList(SysPost post)
+    public List<SysPostVO> selectPostList(SysPostVO post)
     {
         return postMapper.selectPostList(post);
     }
@@ -43,7 +49,7 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 岗位列表
      */
     @Override
-    public List<SysPost> selectPostAll()
+    public List<SysPostVO> selectPostAll()
     {
         return postMapper.selectPostAll();
     }
@@ -55,7 +61,7 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 角色对象信息
      */
     @Override
-    public SysPost selectPostById(Long postId)
+    public SysPostVO selectPostById(Long postId)
     {
         return postMapper.selectPostById(postId);
     }
@@ -79,10 +85,10 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 结果
      */
     @Override
-    public String checkPostNameUnique(SysPost post)
+    public String checkPostNameUnique(SysPostVO post)
     {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        SysPost info = postMapper.checkPostNameUnique(post.getPostName());
+        SysPostVO info = postMapper.checkPostNameUnique(post.getPostName());
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -97,10 +103,10 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 结果
      */
     @Override
-    public String checkPostCodeUnique(SysPost post)
+    public String checkPostCodeUnique(SysPostVO post)
     {
         Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-        SysPost info = postMapper.checkPostCodeUnique(post.getPostCode());
+        SysPostVO info = postMapper.checkPostCodeUnique(post.getPostCode());
         if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
@@ -143,7 +149,7 @@ public class SysPostServiceImpl implements ISysPostService
     {
         for (Long postId : postIds)
         {
-            SysPost post = selectPostById(postId);
+            SysPostVO post = selectPostById(postId);
             if (countUserPostById(postId) > 0)
             {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", post.getPostName()));
@@ -159,7 +165,7 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 结果
      */
     @Override
-    public int insertPost(SysPost post)
+    public int insertPost(SysPostVO post)
     {
         return postMapper.insertPost(post);
     }
@@ -171,7 +177,7 @@ public class SysPostServiceImpl implements ISysPostService
      * @return 结果
      */
     @Override
-    public int updatePost(SysPost post)
+    public int updatePost(SysPostVO post)
     {
         return postMapper.updatePost(post);
     }

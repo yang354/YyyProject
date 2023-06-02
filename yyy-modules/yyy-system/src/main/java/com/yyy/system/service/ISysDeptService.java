@@ -1,7 +1,11 @@
 package com.yyy.system.service;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.IServicePlus;
+
 import com.yyy.system.api.domain.SysDept;
+import com.yyy.system.api.vo.SysDeptVO;
 import com.yyy.system.domain.vo.TreeSelect;
 
 /**
@@ -9,7 +13,7 @@ import com.yyy.system.domain.vo.TreeSelect;
  * 
 * @author 羊扬杨
  */
-public interface ISysDeptService
+public interface ISysDeptService extends IServicePlus<SysDept>
 {
     /**
      * 查询部门管理数据
@@ -17,7 +21,7 @@ public interface ISysDeptService
      * @param dept 部门信息
      * @return 部门信息集合
      */
-    public List<SysDept> selectDeptList(SysDept dept);
+    public List<SysDeptVO> selectDeptList(SysDeptVO dept);
 
     /**
      * 查询部门树结构信息
@@ -25,7 +29,7 @@ public interface ISysDeptService
      * @param dept 部门信息
      * @return 部门树信息集合
      */
-    public List<TreeSelect> selectDeptTreeList(SysDept dept);
+    public List<TreeSelect> selectDeptTreeList(SysDeptVO dept);
 
     /**
      * 构建前端所需要树结构
@@ -33,7 +37,7 @@ public interface ISysDeptService
      * @param depts 部门列表
      * @return 树结构列表
      */
-    public List<SysDept> buildDeptTree(List<SysDept> depts);
+    public List<SysDeptVO> buildDeptTree(List<SysDeptVO> depts);
 
     /**
      * 构建前端所需要下拉树结构
@@ -41,7 +45,7 @@ public interface ISysDeptService
      * @param depts 部门列表
      * @return 下拉树结构列表
      */
-    public List<TreeSelect> buildDeptTreeSelect(List<SysDept> depts);
+    public List<TreeSelect> buildDeptTreeSelect(List<SysDeptVO> depts);
 
     /**
      * 根据角色ID查询部门树信息
@@ -57,7 +61,7 @@ public interface ISysDeptService
      * @param deptId 部门ID
      * @return 部门信息
      */
-    public SysDept selectDeptById(Long deptId);
+    public SysDeptVO selectDeptById(Long deptId);
 
     /**
      * 根据ID查询所有子部门（正常状态）
@@ -89,7 +93,7 @@ public interface ISysDeptService
      * @param dept 部门信息
      * @return 结果
      */
-    public String checkDeptNameUnique(SysDept dept);
+    public String checkDeptNameUnique(SysDeptVO dept);
 
     /**
      * 校验部门是否有数据权限
@@ -104,7 +108,7 @@ public interface ISysDeptService
      * @param dept 部门信息
      * @return 结果
      */
-    public int insertDept(SysDept dept);
+    public int insertDept(SysDeptVO dept);
 
     /**
      * 修改保存部门信息
@@ -112,7 +116,7 @@ public interface ISysDeptService
      * @param dept 部门信息
      * @return 结果
      */
-    public int updateDept(SysDept dept);
+    public int updateDept(SysDeptVO dept);
 
     /**
      * 删除部门管理信息

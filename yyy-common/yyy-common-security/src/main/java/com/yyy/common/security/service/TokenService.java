@@ -44,8 +44,8 @@ public class TokenService
     public Map<String, Object> createToken(LoginUser loginUser)
     {
         String token = IdUtils.fastUUID();
-        Long userId = loginUser.getSysUser().getUserId();
-        String userName = loginUser.getSysUser().getUserName();
+        Long userId = loginUser.getSysUserVO().getUserId();
+        String userName = loginUser.getSysUserVO().getUserName();
         loginUser.setToken(token);
         loginUser.setUserid(userId);
         loginUser.setUsername(userName);

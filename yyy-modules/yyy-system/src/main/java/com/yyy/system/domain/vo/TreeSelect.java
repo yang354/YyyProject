@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.yyy.system.api.domain.SysDept;
-import com.yyy.system.domain.SysMenu;
+import com.yyy.system.api.vo.SysDeptVO;
+import com.yyy.system.vo.SysMenuVO;
 
 /**
  * Treeselect树结构实体类
@@ -31,14 +31,14 @@ public class TreeSelect implements Serializable
 
     }
 
-    public TreeSelect(SysDept dept)
+    public TreeSelect(SysDeptVO dept)
     {
         this.id = dept.getDeptId();
         this.label = dept.getDeptName();
         this.children = dept.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-    public TreeSelect(SysMenu menu)
+    public TreeSelect(SysMenuVO menu)
     {
         this.id = menu.getMenuId();
         this.label = menu.getMenuName();

@@ -1,23 +1,28 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.api.domain.SysUser;
+import com.yyy.system.api.vo.SysUserVO;
+import com.yyy.system.domain.SysRoleMenu;
+import org.apache.ibatis.annotations.Param;
+
 
 /**
  * 用户表 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysUserMapper
+public interface SysUserMapper extends BaseMapperPlus<SysUser>
 {
     /**
      * 根据条件分页查询用户列表
      * 
-     * @param sysUser 用户信息
+     * @param SysUserVO 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser sysUser);
+    public List<SysUserVO> selectUserList(SysUserVO SysUserVO);
 
     /**
      * 根据条件分页查询已配用户角色列表
@@ -25,7 +30,7 @@ public interface SysUserMapper
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public List<SysUserVO> selectAllocatedList(SysUserVO user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -33,7 +38,7 @@ public interface SysUserMapper
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public List<SysUserVO> selectUnallocatedList(SysUserVO user);
 
     /**
      * 通过用户名查询用户
@@ -41,7 +46,7 @@ public interface SysUserMapper
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    public SysUserVO selectUserByUserName(String userName);
 
     /**
      * 通过用户ID查询用户
@@ -49,7 +54,7 @@ public interface SysUserMapper
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    public SysUserVO selectUserById(Long userId);
 
     /**
      * 新增用户信息
@@ -57,7 +62,7 @@ public interface SysUserMapper
      * @param user 用户信息
      * @return 结果
      */
-    public int insertUser(SysUser user);
+    public int insertUser(SysUserVO user);
 
     /**
      * 修改用户信息
@@ -65,7 +70,7 @@ public interface SysUserMapper
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUser(SysUser user);
+    public int updateUser(SysUserVO user);
 
     /**
      * 修改用户头像
@@ -107,7 +112,7 @@ public interface SysUserMapper
      * @param userName 用户名称
      * @return 结果
      */
-    public SysUser checkUserNameUnique(String userName);
+    public SysUserVO checkUserNameUnique(String userName);
 
     /**
      * 校验手机号码是否唯一
@@ -115,7 +120,7 @@ public interface SysUserMapper
      * @param phonenumber 手机号码
      * @return 结果
      */
-    public SysUser checkPhoneUnique(String phonenumber);
+    public SysUserVO checkPhoneUnique(String phonenumber);
 
     /**
      * 校验email是否唯一
@@ -123,5 +128,5 @@ public interface SysUserMapper
      * @param email 用户邮箱
      * @return 结果
      */
-    public SysUser checkEmailUnique(String email);
+    public SysUserVO checkEmailUnique(String email);
 }

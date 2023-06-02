@@ -1,6 +1,9 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.domain.SysUserPost;
 import org.apache.ibatis.annotations.Param;
 import com.yyy.system.domain.SysUserRole;
 
@@ -9,7 +12,7 @@ import com.yyy.system.domain.SysUserRole;
  * 
 * @author 羊扬杨
  */
-public interface SysUserRoleMapper
+public interface SysUserRoleMapper extends BaseMapperPlus<SysUserRole>
 {
     /**
      * 通过用户ID删除用户和角色关联

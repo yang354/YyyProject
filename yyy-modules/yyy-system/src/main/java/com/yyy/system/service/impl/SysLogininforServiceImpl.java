@@ -1,9 +1,15 @@
 package com.yyy.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.system.api.domain.SysDictType;
+import com.yyy.system.api.domain.SysLogininfor;
+import com.yyy.system.api.vo.SysLogininforVO;
+import com.yyy.system.mapper.SysDictTypeMapper;
+import com.yyy.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yyy.system.api.domain.SysLogininfor;
 import com.yyy.system.mapper.SysLogininforMapper;
 import com.yyy.system.service.ISysLogininforService;
 
@@ -13,7 +19,7 @@ import com.yyy.system.service.ISysLogininforService;
 * @author 羊扬杨
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService
+public class SysLogininforServiceImpl extends ServiceImpl<SysLogininforMapper, SysLogininfor> implements ISysLogininforService
 {
 
     @Autowired
@@ -25,7 +31,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @param logininfor 访问日志对象
      */
     @Override
-    public int insertLogininfor(SysLogininfor logininfor)
+    public int insertLogininfor(SysLogininforVO logininfor)
     {
         return logininforMapper.insertLogininfor(logininfor);
     }
@@ -37,7 +43,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor)
+    public List<SysLogininforVO> selectLogininforList(SysLogininforVO logininfor)
     {
         return logininforMapper.selectLogininforList(logininfor);
     }

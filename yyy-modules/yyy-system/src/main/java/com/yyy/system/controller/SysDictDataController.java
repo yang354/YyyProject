@@ -3,6 +3,8 @@ package com.yyy.system.controller;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.api.vo.SysDictDataVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,20 +45,20 @@ public class SysDictDataController extends BaseController
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysDictData dictData)
+    public TableDataInfo list(SysDictDataVO dictData)
     {
         startPage();
-        List<SysDictData> list = dictDataService.selectDictDataList(dictData);
+        List<SysDictDataVO> list = dictDataService.selectDictDataList(dictData);
         return getDataTable(list);
     }
 
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysDictData dictData)
+    public void export(HttpServletResponse response, SysDictDataVO dictData)
     {
-        List<SysDictData> list = dictDataService.selectDictDataList(dictData);
-        ExcelUtil<SysDictData> util = new ExcelUtil<SysDictData>(SysDictData.class);
+        List<SysDictDataVO> list = dictDataService.selectDictDataList(dictData);
+        ExcelUtil<SysDictDataVO> util = new ExcelUtil<SysDictDataVO>(SysDictDataVO.class);
         util.exportExcel(response, list, "字典数据");
     }
 
@@ -76,10 +78,10 @@ public class SysDictDataController extends BaseController
     @GetMapping(value = "/type/{dictType}")
     public AjaxResult dictType(@PathVariable String dictType)
     {
-        List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
+        List<SysDictDataVO> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data))
         {
-            data = new ArrayList<SysDictData>();
+            data = new ArrayList<SysDictDataVO>();
         }
         return success(data);
     }
@@ -90,7 +92,7 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("system:dict:add")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictData dict)
+    public AjaxResult add(@Validated @RequestBody SysDictDataVO dict)
     {
         dict.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.insertDictData(dict));
@@ -102,7 +104,7 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("system:dict:edit")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictData dict)
+    public AjaxResult edit(@Validated @RequestBody SysDictDataVO dict)
     {
         dict.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.updateDictData(dict));

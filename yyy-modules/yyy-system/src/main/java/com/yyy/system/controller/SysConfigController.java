@@ -2,6 +2,8 @@ package com.yyy.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.vo.SysConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,20 +43,20 @@ public class SysConfigController extends BaseController
      */
     @RequiresPermissions("system:config:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysConfig config)
+    public TableDataInfo list(SysConfigVO config)
     {
         startPage();
-        List<SysConfig> list = configService.selectConfigList(config);
+        List<SysConfigVO> list = configService.selectConfigList(config);
         return getDataTable(list);
     }
 
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:config:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysConfig config)
+    public void export(HttpServletResponse response, SysConfigVO config)
     {
-        List<SysConfig> list = configService.selectConfigList(config);
-        ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
+        List<SysConfigVO> list = configService.selectConfigList(config);
+        ExcelUtil<SysConfigVO> util = new ExcelUtil<SysConfigVO>(SysConfigVO.class);
         util.exportExcel(response, list, "参数数据");
     }
 
@@ -82,7 +84,7 @@ public class SysConfigController extends BaseController
     @RequiresPermissions("system:config:add")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysConfig config)
+    public AjaxResult add(@Validated @RequestBody SysConfigVO config)
     {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config)))
         {
@@ -98,7 +100,7 @@ public class SysConfigController extends BaseController
     @RequiresPermissions("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysConfig config)
+    public AjaxResult edit(@Validated @RequestBody SysConfigVO config)
     {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config)))
         {

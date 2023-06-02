@@ -21,7 +21,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.domain.SysPost;
+import com.yyy.system.vo.SysPostVO;
 import com.yyy.system.service.ISysPostService;
 
 /**
@@ -41,20 +41,20 @@ public class SysPostController extends BaseController
      */
     @RequiresPermissions("system:post:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysPost post)
+    public TableDataInfo list(SysPostVO post)
     {
         startPage();
-        List<SysPost> list = postService.selectPostList(post);
+        List<SysPostVO> list = postService.selectPostList(post);
         return getDataTable(list);
     }
 
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:post:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysPost post)
+    public void export(HttpServletResponse response, SysPostVO post)
     {
-        List<SysPost> list = postService.selectPostList(post);
-        ExcelUtil<SysPost> util = new ExcelUtil<SysPost>(SysPost.class);
+        List<SysPostVO> list = postService.selectPostList(post);
+        ExcelUtil<SysPostVO> util = new ExcelUtil<SysPostVO>(SysPostVO.class);
         util.exportExcel(response, list, "岗位数据");
     }
 
@@ -74,7 +74,7 @@ public class SysPostController extends BaseController
     @RequiresPermissions("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysPost post)
+    public AjaxResult add(@Validated @RequestBody SysPostVO post)
     {
         if (UserConstants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post)))
         {
@@ -94,7 +94,7 @@ public class SysPostController extends BaseController
     @RequiresPermissions("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysPost post)
+    public AjaxResult edit(@Validated @RequestBody SysPostVO post)
     {
         if (UserConstants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post)))
         {
@@ -125,7 +125,7 @@ public class SysPostController extends BaseController
     @GetMapping("/optionselect")
     public AjaxResult optionselect()
     {
-        List<SysPost> posts = postService.selectPostAll();
+        List<SysPostVO> posts = postService.selectPostAll();
         return success(posts);
     }
 }

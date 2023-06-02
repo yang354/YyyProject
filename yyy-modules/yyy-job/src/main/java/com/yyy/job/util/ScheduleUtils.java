@@ -16,7 +16,7 @@ import com.yyy.common.core.exception.job.TaskException;
 import com.yyy.common.core.exception.job.TaskException.Code;
 import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 
 /**
  * 定时任务工具类
@@ -29,12 +29,12 @@ public class ScheduleUtils
     /**
      * 得到quartz任务类
      *
-     * @param sysJob 执行计划
+     * @param sysJobVO 执行计划
      * @return 具体执行任务类
      */
-    private static Class<? extends Job> getQuartzJobClass(SysJob sysJob)
+    private static Class<? extends Job> getQuartzJobClass(SysJobVO sysJobVO)
     {
-        boolean isConcurrent = "0".equals(sysJob.getConcurrent());
+        boolean isConcurrent = "0".equals(sysJobVO.getConcurrent());
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
 
@@ -57,7 +57,7 @@ public class ScheduleUtils
     /**
      * 创建定时任务
      */
-    public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException
+    public static void createScheduleJob(Scheduler scheduler, SysJobVO job) throws SchedulerException, TaskException
     {
         Class<? extends Job> jobClass = getQuartzJobClass(job);
         // 构建job信息
@@ -100,7 +100,7 @@ public class ScheduleUtils
     /**
      * 设置定时任务策略
      */
-    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJob job, CronScheduleBuilder cb)
+    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJobVO job, CronScheduleBuilder cb)
             throws TaskException
     {
         switch (job.getMisfirePolicy())

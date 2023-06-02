@@ -2,6 +2,8 @@ package com.yyy.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.api.vo.SysDictTypeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +23,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDictType;
+
 import com.yyy.system.service.ISysDictTypeService;
 
 /**
@@ -38,20 +40,20 @@ public class SysDictTypeController extends BaseController
 
     @RequiresPermissions("system:dict:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysDictType dictType)
+    public TableDataInfo list(SysDictTypeVO dictType)
     {
         startPage();
-        List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
+        List<SysDictTypeVO> list = dictTypeService.selectDictTypeList(dictType);
         return getDataTable(list);
     }
 
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:dict:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysDictType dictType)
+    public void export(HttpServletResponse response, SysDictTypeVO dictType)
     {
-        List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
-        ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
+        List<SysDictTypeVO> list = dictTypeService.selectDictTypeList(dictType);
+        ExcelUtil<SysDictTypeVO> util = new ExcelUtil<SysDictTypeVO>(SysDictTypeVO.class);
         util.exportExcel(response, list, "字典类型");
     }
 
@@ -71,7 +73,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:add")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictType dict)
+    public AjaxResult add(@Validated @RequestBody SysDictTypeVO dict)
     {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict)))
         {
@@ -87,7 +89,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:edit")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictType dict)
+    public AjaxResult edit(@Validated @RequestBody SysDictTypeVO dict)
     {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict)))
         {
@@ -127,7 +129,7 @@ public class SysDictTypeController extends BaseController
     @GetMapping("/optionselect")
     public AjaxResult optionselect()
     {
-        List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
+        List<SysDictTypeVO> dictTypes = dictTypeService.selectDictTypeAll();
         return success(dictTypes);
     }
 }

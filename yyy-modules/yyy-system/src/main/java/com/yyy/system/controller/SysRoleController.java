@@ -2,6 +2,9 @@ package com.yyy.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.api.vo.SysDeptVO;
+import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,9 +24,8 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDept;
-import com.yyy.system.api.domain.SysRole;
-import com.yyy.system.api.domain.SysUser;
+
+import com.yyy.system.api.vo.SysRoleVO;
 import com.yyy.system.domain.SysUserRole;
 import com.yyy.system.service.ISysDeptService;
 import com.yyy.system.service.ISysRoleService;
@@ -49,20 +51,20 @@ public class SysRoleController extends BaseController
 
     @RequiresPermissions("system:role:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysRole role)
+    public TableDataInfo list(SysRoleVO role)
     {
         startPage();
-        List<SysRole> list = roleService.selectRoleList(role);
+        List<SysRoleVO> list = roleService.selectRoleList(role);
         return getDataTable(list);
     }
 
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:role:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysRole role)
+    public void export(HttpServletResponse response, SysRoleVO role)
     {
-        List<SysRole> list = roleService.selectRoleList(role);
-        ExcelUtil<SysRole> util = new ExcelUtil<SysRole>(SysRole.class);
+        List<SysRoleVO> list = roleService.selectRoleList(role);
+        ExcelUtil<SysRoleVO> util = new ExcelUtil<SysRoleVO>(SysRoleVO.class);
         util.exportExcel(response, list, "角色数据");
     }
 
@@ -84,7 +86,7 @@ public class SysRoleController extends BaseController
     @RequiresPermissions("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysRole role)
+    public AjaxResult add(@Validated @RequestBody SysRoleVO role)
     {
         if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role)))
         {
@@ -105,7 +107,7 @@ public class SysRoleController extends BaseController
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysRole role)
+    public AjaxResult edit(@Validated @RequestBody SysRoleVO role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -127,7 +129,7 @@ public class SysRoleController extends BaseController
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/dataScope")
-    public AjaxResult dataScope(@RequestBody SysRole role)
+    public AjaxResult dataScope(@RequestBody SysRoleVO role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -140,7 +142,7 @@ public class SysRoleController extends BaseController
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysRole role)
+    public AjaxResult changeStatus(@RequestBody SysRoleVO role)
     {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
@@ -173,10 +175,10 @@ public class SysRoleController extends BaseController
      */
     @RequiresPermissions("system:role:list")
     @GetMapping("/authUser/allocatedList")
-    public TableDataInfo allocatedList(SysUser user)
+    public TableDataInfo allocatedList(SysUserVO user)
     {
         startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
+        List<SysUserVO> list = userService.selectAllocatedList(user);
         return getDataTable(list);
     }
 
@@ -185,10 +187,10 @@ public class SysRoleController extends BaseController
      */
     @RequiresPermissions("system:role:list")
     @GetMapping("/authUser/unallocatedList")
-    public TableDataInfo unallocatedList(SysUser user)
+    public TableDataInfo unallocatedList(SysUserVO user)
     {
         startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
+        List<SysUserVO> list = userService.selectUnallocatedList(user);
         return getDataTable(list);
     }
 
@@ -235,7 +237,7 @@ public class SysRoleController extends BaseController
     {
         AjaxResult ajax = AjaxResult.success();
         ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
-        ajax.put("depts", deptService.selectDeptTreeList(new SysDept()));
+        ajax.put("depts", deptService.selectDeptTreeList(new SysDeptVO()));
         return ajax;
     }
 }

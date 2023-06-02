@@ -51,4 +51,32 @@ public class CacheConstants
      * 登录账户密码错误次数 redis key
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
+
+
+    /**
+     * 令牌自定义标识
+     */
+    public static final String HEADER = "Authorization";
+
+    /**
+     * 令牌前缀
+     */
+    public static final String TOKEN_PREFIX = "Bearer ";
+
+
+
+    /**
+     * 用户ID字段
+     */
+    public static final String DETAILS_USER_ID = "user_id";
+
+    /**
+     * 用户名字段
+     */
+    public static final String DETAILS_USERNAME = "username";
+
+    /**
+     * 授权信息字段
+     */
+    public static final String AUTHORIZATION_HEADER = "authorization";
 }

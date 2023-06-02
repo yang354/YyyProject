@@ -1,9 +1,15 @@
 package com.yyy.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.system.domain.SysMenu;
+import com.yyy.system.domain.SysNotice;
+import com.yyy.system.mapper.SysMenuMapper;
+import com.yyy.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yyy.system.domain.SysNotice;
+import com.yyy.system.vo.SysNoticeVO;
 import com.yyy.system.mapper.SysNoticeMapper;
 import com.yyy.system.service.ISysNoticeService;
 
@@ -13,7 +19,7 @@ import com.yyy.system.service.ISysNoticeService;
 * @author 羊扬杨
  */
 @Service
-public class SysNoticeServiceImpl implements ISysNoticeService
+public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements ISysNoticeService
 {
     @Autowired
     private SysNoticeMapper noticeMapper;
@@ -25,7 +31,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
      * @return 公告信息
      */
     @Override
-    public SysNotice selectNoticeById(Long noticeId)
+    public SysNoticeVO selectNoticeById(Long noticeId)
     {
         return noticeMapper.selectNoticeById(noticeId);
     }
@@ -37,7 +43,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
      * @return 公告集合
      */
     @Override
-    public List<SysNotice> selectNoticeList(SysNotice notice)
+    public List<SysNoticeVO> selectNoticeList(SysNoticeVO notice)
     {
         return noticeMapper.selectNoticeList(notice);
     }
@@ -49,7 +55,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
      * @return 结果
      */
     @Override
-    public int insertNotice(SysNotice notice)
+    public int insertNotice(SysNoticeVO notice)
     {
         return noticeMapper.insertNotice(notice);
     }
@@ -61,7 +67,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService
      * @return 结果
      */
     @Override
-    public int updateNotice(SysNotice notice)
+    public int updateNotice(SysNoticeVO notice)
     {
         return noticeMapper.updateNotice(notice);
     }

@@ -2,6 +2,8 @@ package com.yyy.common.datascope.aspect;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.yyy.system.api.vo.SysUserVO;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,8 +14,8 @@ import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.core.web.domain.BaseEntity;
 import com.yyy.common.datascope.annotation.DataScope;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysRole;
-import com.yyy.system.api.domain.SysUser;
+import com.yyy.system.api.vo.SysRoleVO;
+
 import com.yyy.system.api.model.LoginUser;
 
 /**
@@ -68,7 +70,7 @@ public class DataScopeAspect
         LoginUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNotNull(loginUser))
         {
-            SysUser currentUser = loginUser.getSysUser();
+            SysUserVO currentUser = loginUser.getSysUserVO();
             // 如果是超级管理员，则不过滤数据
             if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin())
             {
@@ -88,12 +90,12 @@ public class DataScopeAspect
      * @param userAlias 用户别名
      * @param permission 权限字符
      */
-    public static void dataScopeFilter(JoinPoint joinPoint, SysUser user, String deptAlias, String userAlias, String permission)
+    public static void dataScopeFilter(JoinPoint joinPoint, SysUserVO user, String deptAlias, String userAlias, String permission)
     {
         StringBuilder sqlString = new StringBuilder();
         List<String> conditions = new ArrayList<String>();
 
-        for (SysRole role : user.getRoles())
+        for (SysRoleVO role : user.getRoles())
         {
             String dataScope = role.getDataScope();
             if (!DATA_SCOPE_CUSTOM.equals(dataScope) && conditions.contains(dataScope))

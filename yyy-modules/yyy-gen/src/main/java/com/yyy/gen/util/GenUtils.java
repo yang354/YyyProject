@@ -5,8 +5,8 @@ import org.apache.commons.lang3.RegExUtils;
 import com.yyy.common.core.constant.GenConstants;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.gen.config.GenConfig;
-import com.yyy.gen.domain.GenTable;
-import com.yyy.gen.domain.GenTableColumn;
+import com.yyy.gen.vo.GenTableVO;
+import com.yyy.gen.vo.GenTableColumnVO;
 
 /**
  * 代码生成器 工具类
@@ -18,21 +18,21 @@ public class GenUtils
     /**
      * 初始化表信息
      */
-    public static void initTable(GenTable genTable, String operName)
+    public static void initTable(GenTableVO GenTableVO, String operName)
     {
-        genTable.setClassName(convertClassName(genTable.getTableName()));
-        genTable.setPackageName(GenConfig.getPackageName());
-        genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
-        genTable.setBusinessName(getBusinessName(genTable.getTableName()));
-        genTable.setFunctionName(replaceText(genTable.getTableComment()));
-        genTable.setFunctionAuthor(GenConfig.getAuthor());
-        genTable.setCreateBy(operName);
+        GenTableVO.setClassName(convertClassName(GenTableVO.getTableName()));
+        GenTableVO.setPackageName(GenConfig.getPackageName());
+        GenTableVO.setModuleName(getModuleName(GenConfig.getPackageName()));
+        GenTableVO.setBusinessName(getBusinessName(GenTableVO.getTableName()));
+        GenTableVO.setFunctionName(replaceText(GenTableVO.getTableComment()));
+        GenTableVO.setFunctionAuthor(GenConfig.getAuthor());
+        GenTableVO.setCreateBy(operName);
     }
 
     /**
      * 初始化列属性字段
      */
-    public static void initColumnField(GenTableColumn column, GenTable table)
+    public static void initColumnField(GenTableColumnVO column, GenTableVO table)
     {
         String dataType = getDbType(column.getColumnType());
         String columnName = column.getColumnName();

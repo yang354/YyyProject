@@ -16,7 +16,7 @@ import com.yyy.common.core.web.page.TableDataInfo;
 import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
-import com.yyy.job.domain.SysJobLog;
+import com.yyy.job.vo.SysJobLogVO;
 import com.yyy.job.service.ISysJobLogService;
 
 /**
@@ -36,10 +36,10 @@ public class SysJobLogController extends BaseController
      */
     @RequiresPermissions("monitor:job:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysJobLog sysJobLog)
+    public TableDataInfo list(SysJobLogVO sysJobLogVO)
     {
         startPage();
-        List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
+        List<SysJobLogVO> list = jobLogService.selectJobLogList(sysJobLogVO);
         return getDataTable(list);
     }
 
@@ -49,10 +49,10 @@ public class SysJobLogController extends BaseController
     @RequiresPermissions("monitor:job:export")
     @Log(title = "任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysJobLog sysJobLog)
+    public void export(HttpServletResponse response, SysJobLogVO sysJobLogVO)
     {
-        List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-        ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
+        List<SysJobLogVO> list = jobLogService.selectJobLogList(sysJobLogVO);
+        ExcelUtil<SysJobLogVO> util = new ExcelUtil<SysJobLogVO>(SysJobLogVO.class);
         util.exportExcel(response, list, "调度日志");
     }
 

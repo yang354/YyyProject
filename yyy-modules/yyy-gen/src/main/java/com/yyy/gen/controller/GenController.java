@@ -23,8 +23,8 @@ import com.yyy.common.core.web.page.TableDataInfo;
 import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
-import com.yyy.gen.domain.GenTable;
-import com.yyy.gen.domain.GenTableColumn;
+import com.yyy.gen.vo.GenTableVO;
+import com.yyy.gen.vo.GenTableColumnVO;
 import com.yyy.gen.service.IGenTableColumnService;
 import com.yyy.gen.service.IGenTableService;
 
@@ -48,10 +48,10 @@ public class GenController extends BaseController
      */
     @RequiresPermissions("tool:gen:list")
     @GetMapping("/list")
-    public TableDataInfo genList(GenTable genTable)
+    public TableDataInfo genList(GenTableVO genTableVO)
     {
         startPage();
-        List<GenTable> list = genTableService.selectGenTableList(genTable);
+        List<GenTableVO> list = genTableService.selectGenTableList(genTableVO);
         return getDataTable(list);
     }
 
@@ -62,9 +62,9 @@ public class GenController extends BaseController
     @GetMapping(value = "/{tableId}")
     public AjaxResult getInfo(@PathVariable Long tableId)
     {
-        GenTable table = genTableService.selectGenTableById(tableId);
-        List<GenTable> tables = genTableService.selectGenTableAll();
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
+        GenTableVO table = genTableService.selectGenTableById(tableId);
+        List<GenTableVO> tables = genTableService.selectGenTableAll();
+        List<GenTableColumnVO> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("info", table);
         map.put("rows", list);
@@ -77,10 +77,10 @@ public class GenController extends BaseController
      */
     @RequiresPermissions("tool:gen:list")
     @GetMapping("/db/list")
-    public TableDataInfo dataList(GenTable genTable)
+    public TableDataInfo dataList(GenTableVO genTableVO)
     {
         startPage();
-        List<GenTable> list = genTableService.selectDbTableList(genTable);
+        List<GenTableVO> list = genTableService.selectDbTableList(genTableVO);
         return getDataTable(list);
     }
 
@@ -91,7 +91,7 @@ public class GenController extends BaseController
     public TableDataInfo columnList(Long tableId)
     {
         TableDataInfo dataInfo = new TableDataInfo();
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
+        List<GenTableColumnVO> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
         dataInfo.setRows(list);
         dataInfo.setTotal(list.size());
         return dataInfo;
@@ -107,7 +107,7 @@ public class GenController extends BaseController
     {
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
-        List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+        List<GenTableVO> tableList = genTableService.selectDbTableListByNames(tableNames);
         genTableService.importGenTable(tableList);
         return success();
     }
@@ -118,10 +118,10 @@ public class GenController extends BaseController
     @RequiresPermissions("tool:gen:edit")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult editSave(@Validated @RequestBody GenTable genTable)
+    public AjaxResult editSave(@Validated @RequestBody GenTableVO genTableVO)
     {
-        genTableService.validateEdit(genTable);
-        genTableService.updateGenTable(genTable);
+        genTableService.validateEdit(genTableVO);
+        genTableService.updateGenTable(genTableVO);
         return success();
     }
 

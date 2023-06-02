@@ -1,6 +1,9 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.domain.SysPost;
 import com.yyy.system.domain.SysRoleDept;
 
 /**
@@ -8,7 +11,7 @@ import com.yyy.system.domain.SysRoleDept;
  * 
 * @author 羊扬杨
  */
-public interface SysRoleDeptMapper
+public interface SysRoleDeptMapper extends BaseMapperPlus<SysRoleDept>
 {
     /**
      * 通过角色ID删除角色和部门关联

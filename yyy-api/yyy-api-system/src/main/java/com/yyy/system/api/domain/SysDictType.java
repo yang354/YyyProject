@@ -1,96 +1,55 @@
 package com.yyy.system.api.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yyy.common.core.annotation.Excel;
-import com.yyy.common.core.annotation.Excel.ColumnType;
-import com.yyy.common.core.web.domain.BaseEntity;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 字典类型表 sys_dict_type
- * 
-* @author 羊扬杨
+ * @Author yzz
+ * @Date 2023/6/1 下午6:36
  */
-public class SysDictType extends BaseEntity
-{
-    private static final long serialVersionUID = 1L;
+@Data
+@TableName("sys_dict_type")
+public class SysDictType implements Serializable {
 
-    /** 字典主键 */
-    @Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
-    private Long dictId;
+        private static final long serialVersionUID = 1L;
 
-    /** 字典名称 */
-    @Excel(name = "字典名称")
-    private String dictName;
+        /** 字典主键 */
+        @Excel(name = "字典主键", cellType = Excel.ColumnType.NUMERIC)
+        private Long dictId;
 
-    /** 字典类型 */
-    @Excel(name = "字典类型")
-    private String dictType;
+        /** 字典名称 */
+        @Excel(name = "字典名称")
+        private String dictName;
 
-    /** 状态（0正常 1停用） */
-    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
-    private String status;
+        /** 字典类型 */
+        @Excel(name = "字典类型")
+        private String dictType;
 
-    public Long getDictId()
-    {
-        return dictId;
-    }
+        /** 状态（0正常 1停用） */
+        @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+        private String status;
 
-    public void setDictId(Long dictId)
-    {
-        this.dictId = dictId;
-    }
+    /** 创建者 */
+    private String createBy;
 
-    @NotBlank(message = "字典名称不能为空")
-    @Size(min = 0, max = 100, message = "字典类型名称长度不能超过100个字符")
-    public String getDictName()
-    {
-        return dictName;
-    }
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
-    public void setDictName(String dictName)
-    {
-        this.dictName = dictName;
-    }
+    /** 更新者 */
+    private String updateBy;
 
-    @NotBlank(message = "字典类型不能为空")
-    @Size(min = 0, max = 100, message = "字典类型类型长度不能超过100个字符")
-    @Pattern(regexp = "^[a-z][a-z0-9_]*$", message = "字典类型必须以字母开头，且只能为（小写字母，数字，下滑线）")
-    public String getDictType()
-    {
-        return dictType;
-    }
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
 
-    public void setDictType(String dictType)
-    {
-        this.dictType = dictType;
-    }
+    /** 备注 */
+    private String remark;
 
-    public String getStatus()
-    {
-        return status;
-    }
 
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-    
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("dictId", getDictId())
-            .append("dictName", getDictName())
-            .append("dictType", getDictType())
-            .append("status", getStatus())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
-    }
 }

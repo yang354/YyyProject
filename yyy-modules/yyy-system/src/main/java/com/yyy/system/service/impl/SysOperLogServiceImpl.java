@@ -1,9 +1,14 @@
 package com.yyy.system.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.mapper.SysNoticeMapper;
+import com.yyy.system.service.ISysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.api.vo.SysOperLogVO;
 import com.yyy.system.mapper.SysOperLogMapper;
 import com.yyy.system.service.ISysOperLogService;
 
@@ -13,7 +18,7 @@ import com.yyy.system.service.ISysOperLogService;
 * @author 羊扬杨
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService
+public class SysOperLogServiceImpl extends ServiceImpl<SysOperLogMapper, SysOperLog> implements ISysOperLogService
 {
     @Autowired
     private SysOperLogMapper operLogMapper;
@@ -25,7 +30,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService
      * @return 结果
      */
     @Override
-    public int insertOperlog(SysOperLog operLog)
+    public int insertOperlog(SysOperLogVO operLog)
     {
         return operLogMapper.insertOperlog(operLog);
     }
@@ -37,7 +42,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService
      * @return 操作日志集合
      */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog)
+    public List<SysOperLogVO> selectOperLogList(SysOperLogVO operLog)
     {
         return operLogMapper.selectOperLogList(operLog);
     }
@@ -61,7 +66,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService
      * @return 操作日志对象
      */
     @Override
-    public SysOperLog selectOperLogById(Long operId)
+    public SysOperLogVO selectOperLogById(Long operId)
     {
         return operLogMapper.selectOperLogById(operId);
     }

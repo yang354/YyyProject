@@ -1,9 +1,12 @@
 package com.yyy.job.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yyy.job.domain.SysJobLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.yyy.job.domain.SysJobLog;
+import com.yyy.job.vo.SysJobLogVO;
 import com.yyy.job.mapper.SysJobLogMapper;
 
 /**
@@ -12,7 +15,7 @@ import com.yyy.job.mapper.SysJobLogMapper;
 * @author 羊扬杨
  */
 @Service
-public class SysJobLogServiceImpl implements ISysJobLogService
+public class SysJobLogServiceImpl extends ServiceImpl<SysJobLogMapper, SysJobLog> implements ISysJobLogService
 {
     @Autowired
     private SysJobLogMapper jobLogMapper;
@@ -24,7 +27,7 @@ public class SysJobLogServiceImpl implements ISysJobLogService
      * @return 调度任务日志集合
      */
     @Override
-    public List<SysJobLog> selectJobLogList(SysJobLog jobLog)
+    public List<SysJobLogVO> selectJobLogList(SysJobLogVO jobLog)
     {
         return jobLogMapper.selectJobLogList(jobLog);
     }
@@ -36,7 +39,7 @@ public class SysJobLogServiceImpl implements ISysJobLogService
      * @return 调度任务日志对象信息
      */
     @Override
-    public SysJobLog selectJobLogById(Long jobLogId)
+    public SysJobLogVO selectJobLogById(Long jobLogId)
     {
         return jobLogMapper.selectJobLogById(jobLogId);
     }
@@ -47,7 +50,7 @@ public class SysJobLogServiceImpl implements ISysJobLogService
      * @param jobLog 调度日志信息
      */
     @Override
-    public void addJobLog(SysJobLog jobLog)
+    public void addJobLog(SysJobLogVO jobLog)
     {
         jobLogMapper.insertJobLog(jobLog);
     }

@@ -1,16 +1,20 @@
 package com.yyy.job.service;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.IServicePlus;
+import com.yyy.job.domain.SysJob;
+import com.yyy.job.domain.SysJobLog;
 import org.quartz.SchedulerException;
 import com.yyy.common.core.exception.job.TaskException;
-import com.yyy.job.domain.SysJob;
+import com.yyy.job.vo.SysJobVO;
 
 /**
  * 定时任务调度信息信息 服务层
  * 
 * @author 羊扬杨
  */
-public interface ISysJobService
+public interface ISysJobService extends IServicePlus<SysJob>
 {
     /**
      * 获取quartz调度器的计划任务
@@ -18,7 +22,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 调度任务集合
      */
-    public List<SysJob> selectJobList(SysJob job);
+    public List<SysJobVO> selectJobList(SysJobVO job);
 
     /**
      * 通过调度任务ID查询调度信息
@@ -26,7 +30,7 @@ public interface ISysJobService
      * @param jobId 调度任务ID
      * @return 调度任务对象信息
      */
-    public SysJob selectJobById(Long jobId);
+    public SysJobVO selectJobById(Long jobId);
 
     /**
      * 暂停任务
@@ -34,7 +38,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int pauseJob(SysJob job) throws SchedulerException;
+    public int pauseJob(SysJobVO job) throws SchedulerException;
 
     /**
      * 恢复任务
@@ -42,7 +46,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int resumeJob(SysJob job) throws SchedulerException;
+    public int resumeJob(SysJobVO job) throws SchedulerException;
 
     /**
      * 删除任务后，所对应的trigger也将被删除
@@ -50,7 +54,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int deleteJob(SysJob job) throws SchedulerException;
+    public int deleteJob(SysJobVO job) throws SchedulerException;
 
     /**
      * 批量删除调度信息
@@ -66,7 +70,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int changeStatus(SysJob job) throws SchedulerException;
+    public int changeStatus(SysJobVO job) throws SchedulerException;
 
     /**
      * 立即运行任务
@@ -74,7 +78,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public boolean run(SysJob job) throws SchedulerException;
+    public boolean run(SysJobVO job) throws SchedulerException;
 
     /**
      * 新增任务
@@ -82,7 +86,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int insertJob(SysJob job) throws SchedulerException, TaskException;
+    public int insertJob(SysJobVO job) throws SchedulerException, TaskException;
 
     /**
      * 更新任务
@@ -90,7 +94,7 @@ public interface ISysJobService
      * @param job 调度信息
      * @return 结果
      */
-    public int updateJob(SysJob job) throws SchedulerException, TaskException;
+    public int updateJob(SysJobVO job) throws SchedulerException, TaskException;
 
     /**
      * 校验cron表达式是否有效

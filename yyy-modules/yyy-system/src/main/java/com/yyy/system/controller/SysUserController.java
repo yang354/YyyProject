@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+
+import com.yyy.system.api.vo.SysDeptVO;
+import com.yyy.system.api.vo.SysUserVO;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,9 +32,8 @@ import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.InnerAuth;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDept;
-import com.yyy.system.api.domain.SysRole;
-import com.yyy.system.api.domain.SysUser;
+
+import com.yyy.system.api.vo.SysRoleVO;
 import com.yyy.system.api.model.LoginUser;
 import com.yyy.system.service.ISysConfigService;
 import com.yyy.system.service.ISysDeptService;
@@ -72,20 +74,20 @@ public class SysUserController extends BaseController
      */
     @RequiresPermissions("system:user:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysUser user)
+    public TableDataInfo list(SysUserVO user)
     {
         startPage();
-        List<SysUser> list = userService.selectUserList(user);
+        List<SysUserVO> list = userService.selectUserList(user);
         return getDataTable(list);
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysUser user)
+    public void export(HttpServletResponse response, SysUserVO user)
     {
-        List<SysUser> list = userService.selectUserList(user);
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        List<SysUserVO> list = userService.selectUserList(user);
+        ExcelUtil<SysUserVO> util = new ExcelUtil<SysUserVO>(SysUserVO.class);
         util.exportExcel(response, list, "用户数据");
     }
 
@@ -94,8 +96,8 @@ public class SysUserController extends BaseController
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-        List<SysUser> userList = util.importExcel(file.getInputStream());
+        ExcelUtil<SysUserVO> util = new ExcelUtil<SysUserVO>(SysUserVO.class);
+        List<SysUserVO> userList = util.importExcel(file.getInputStream());
         String operName = SecurityUtils.getUsername();
         String message = userService.importUser(userList, updateSupport, operName);
         return success(message);
@@ -104,7 +106,7 @@ public class SysUserController extends BaseController
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response) throws IOException
     {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        ExcelUtil<SysUserVO> util = new ExcelUtil<SysUserVO>(SysUserVO.class);
         util.importTemplateExcel(response, "用户数据");
     }
 
@@ -115,17 +117,17 @@ public class SysUserController extends BaseController
     @GetMapping("/info/{username}")
     public R<LoginUser> info(@PathVariable("username") String username)
     {
-        SysUser sysUser = userService.selectUserByUserName(username);
-        if (StringUtils.isNull(sysUser))
+        SysUserVO SysUserVO = userService.selectUserByUserName(username);
+        if (StringUtils.isNull(SysUserVO))
         {
             return R.fail("用户名或密码错误");
         }
         // 角色集合
-        Set<String> roles = permissionService.getRolePermission(sysUser);
+        Set<String> roles = permissionService.getRolePermission(SysUserVO);
         // 权限集合
-        Set<String> permissions = permissionService.getMenuPermission(sysUser);
+        Set<String> permissions = permissionService.getMenuPermission(SysUserVO);
         LoginUser sysUserVo = new LoginUser();
-        sysUserVo.setSysUser(sysUser);
+        sysUserVo.setSysUserVO(SysUserVO);
         sysUserVo.setRoles(roles);
         sysUserVo.setPermissions(permissions);
         return R.ok(sysUserVo);
@@ -136,18 +138,18 @@ public class SysUserController extends BaseController
      */
     @InnerAuth
     @PostMapping("/register")
-    public R<Boolean> register(@RequestBody SysUser sysUser)
+    public R<Boolean> register(@RequestBody SysUserVO SysUserVO)
     {
-        String username = sysUser.getUserName();
+        String username = SysUserVO.getUserName();
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser"))))
         {
             return R.fail("当前系统没有开启注册功能！");
         }
-        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser)))
+        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(SysUserVO)))
         {
             return R.fail("保存用户'" + username + "'失败，注册账号已存在");
         }
-        return R.ok(userService.registerUser(sysUser));
+        return R.ok(userService.registerUser(SysUserVO));
     }
 
     /**
@@ -158,7 +160,7 @@ public class SysUserController extends BaseController
     @GetMapping("getInfo")
     public AjaxResult getInfo()
     {
-        SysUser user = userService.selectUserById(SecurityUtils.getUserId());
+        SysUserVO user = userService.selectUserById(SecurityUtils.getUserId());
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
@@ -179,15 +181,15 @@ public class SysUserController extends BaseController
     {
         userService.checkUserDataScope(userId);
         AjaxResult ajax = AjaxResult.success();
-        List<SysRole> roles = roleService.selectRoleAll();
-        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        List<SysRoleVO> roles = roleService.selectRoleAll();
+        ajax.put("roles", SysUserVO.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId))
         {
-            SysUser sysUser = userService.selectUserById(userId);
-            ajax.put(AjaxResult.DATA_TAG, sysUser);
+            SysUserVO SysUserVO = userService.selectUserById(userId);
+            ajax.put(AjaxResult.DATA_TAG, SysUserVO);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
-            ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+            ajax.put("roleIds", SysUserVO.getRoles().stream().map(SysRoleVO::getRoleId).collect(Collectors.toList()));
         }
         return ajax;
     }
@@ -198,7 +200,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysUser user)
+    public AjaxResult add(@Validated @RequestBody SysUserVO user)
     {
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user)))
         {
@@ -225,7 +227,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysUser user)
+    public AjaxResult edit(@Validated @RequestBody SysUserVO user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -268,7 +270,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
-    public AjaxResult resetPwd(@RequestBody SysUser user)
+    public AjaxResult resetPwd(@RequestBody SysUserVO user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -283,7 +285,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysUser user)
+    public AjaxResult changeStatus(@RequestBody SysUserVO user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -299,10 +301,10 @@ public class SysUserController extends BaseController
     public AjaxResult authRole(@PathVariable("userId") Long userId)
     {
         AjaxResult ajax = AjaxResult.success();
-        SysUser user = userService.selectUserById(userId);
-        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+        SysUserVO user = userService.selectUserById(userId);
+        List<SysRoleVO> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
-        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        ajax.put("roles", SysUserVO.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         return ajax;
     }
 
@@ -324,7 +326,7 @@ public class SysUserController extends BaseController
      */
     @RequiresPermissions("system:user:list")
     @GetMapping("/deptTree")
-    public AjaxResult deptTree(SysDept dept)
+    public AjaxResult deptTree(SysDeptVO dept)
     {
         return success(deptService.selectDeptTreeList(dept));
     }

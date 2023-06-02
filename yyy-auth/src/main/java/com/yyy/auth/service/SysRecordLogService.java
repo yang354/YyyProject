@@ -1,5 +1,6 @@
 package com.yyy.auth.service;
 
+import com.yyy.system.api.vo.SysLogininforVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.yyy.common.core.constant.Constants;
@@ -8,7 +9,7 @@ import com.yyy.common.core.utils.ServletUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.core.utils.ip.IpUtils;
 import com.yyy.system.api.RemoteLogService;
-import com.yyy.system.api.domain.SysLogininfor;
+
 
 /**
  * 记录日志方法
@@ -31,7 +32,7 @@ public class SysRecordLogService
      */
     public void recordLogininfor(String username, String status, String message)
     {
-        SysLogininfor logininfor = new SysLogininfor();
+        SysLogininforVO logininfor = new SysLogininforVO();
         logininfor.setUserName(username);
         logininfor.setIpaddr(IpUtils.getIpAddr(ServletUtils.getRequest()));
         logininfor.setMsg(message);

@@ -1,14 +1,18 @@
 package com.yyy.system.mapper;
 
 import java.util.List;
+
+import com.yyy.common.core.web.page.BaseMapperPlus;
+import com.yyy.system.api.domain.SysOperLog;
 import com.yyy.system.domain.SysPost;
+import com.yyy.system.vo.SysPostVO;
 
 /**
  * 岗位信息 数据层
  * 
 * @author 羊扬杨
  */
-public interface SysPostMapper
+public interface SysPostMapper extends BaseMapperPlus<SysPost>
 {
     /**
      * 查询岗位数据集合
@@ -16,14 +20,14 @@ public interface SysPostMapper
      * @param post 岗位信息
      * @return 岗位数据集合
      */
-    public List<SysPost> selectPostList(SysPost post);
+    public List<SysPostVO> selectPostList(SysPostVO post);
 
     /**
      * 查询所有岗位
      * 
      * @return 岗位列表
      */
-    public List<SysPost> selectPostAll();
+    public List<SysPostVO> selectPostAll();
 
     /**
      * 通过岗位ID查询岗位信息
@@ -31,7 +35,7 @@ public interface SysPostMapper
      * @param postId 岗位ID
      * @return 角色对象信息
      */
-    public SysPost selectPostById(Long postId);
+    public SysPostVO selectPostById(Long postId);
 
     /**
      * 根据用户ID获取岗位选择框列表
@@ -47,7 +51,7 @@ public interface SysPostMapper
      * @param userName 用户名
      * @return 结果
      */
-    public List<SysPost> selectPostsByUserName(String userName);
+    public List<SysPostVO> selectPostsByUserName(String userName);
 
     /**
      * 删除岗位信息
@@ -71,7 +75,7 @@ public interface SysPostMapper
      * @param post 岗位信息
      * @return 结果
      */
-    public int updatePost(SysPost post);
+    public int updatePost(SysPostVO post);
 
     /**
      * 新增岗位信息
@@ -79,7 +83,7 @@ public interface SysPostMapper
      * @param post 岗位信息
      * @return 结果
      */
-    public int insertPost(SysPost post);
+    public int insertPost(SysPostVO post);
 
     /**
      * 校验岗位名称
@@ -87,7 +91,7 @@ public interface SysPostMapper
      * @param postName 岗位名称
      * @return 结果
      */
-    public SysPost checkPostNameUnique(String postName);
+    public SysPostVO checkPostNameUnique(String postName);
 
     /**
      * 校验岗位编码
@@ -95,5 +99,5 @@ public interface SysPostMapper
      * @param postCode 岗位编码
      * @return 结果
      */
-    public SysPost checkPostCodeUnique(String postCode);
+    public SysPostVO checkPostCodeUnique(String postCode);
 }

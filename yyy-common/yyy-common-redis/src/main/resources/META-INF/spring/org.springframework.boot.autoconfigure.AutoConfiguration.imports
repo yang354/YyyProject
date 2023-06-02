@@ -1,2 +1,3 @@
 com.yyy.common.redis.configure.RedisConfig
 com.yyy.common.redis.service.RedisService
+com.yyy.common.redis.utils.RedisLock

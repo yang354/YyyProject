@@ -57,7 +57,7 @@ value值  Bearer xxxxxtokenxxxxx
 
 第二种通过swagger - 网关模块
 value值  Bearer xxxxxtokenxxxxx
-
+Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2tleSI6ImJmNmU3ZDE2LTYxMDUtNDcwOS04MWUyLTA0ODU5MmJmNWU4OSIsInVzZXJuYW1lIjoiYWRtaW4ifQ.KsZnrwlVVJpeK5bTRK7Eb8thX7RgBEl3megz6AYqhMjl2xUdB0bbixPQ1AlGoPVlhTumEgfy9UVJHBnLhJqeNw
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 如何使用远程调用
 首先启动调用的接口方的服务模块要启动和被调用方的服务模块要启动
@@ -76,5 +76,82 @@ tomcat这边 优先触发
 想要日志输入sql语句时，logback.xml文件的输出方式改为debug
         <!-- 系统模块日志级别控制  -->
     	<logger name="com.ruoyi" level="debug" />
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+如何使用分页
+例如
+    @RequiresPermissions("tool:gen:list")
+    @GetMapping("/list")
+    public TableDataInfo genList(GenTableVO GenTableVO)
+    {
+        startPage();
+        List<GenTableVO> list = genTableService.selectGenTableList(GenTableVO);
+        return getDataTable(list);
+    }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+获取登录人信息的两种方式
+TokenService
+SecurityUtils
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+模块整合mybatis-plus
+1、引入依赖
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-datasource</artifactId>
+        </dependency>
+2、修改yaml文件，和扫描包路径
+2.1、这一部分直接替换 datasource部分
+datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      datasource:
+          # 主库数据源
+          master:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://localhost:3306/yyy-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+            username: root
+            password: lf18289339306
+          # 从库数据源
+          # slave:
+            # username:
+            # password:
+            # url:
+            # driver-class-name:
+
+2.2、
+原本 typeAliasesPackage: com.yyy.gen.domain
+替换 typeAliasesPackage: com.yyy.gen
+
+3、实体类、server类、mapper对象都添加mybatis-plus通用类
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+如何使用定时器
+
+在RyTask 创建定时方法
+然后在数据库sys_job表添加定时器记录
+当项目启动时，会查出所有记录，包括新添加的记录，此时重新初始化跑定时器，所以不用担心手动添加定时器，会不生效---这种方式一定要重启服务
+（通过图形界面添加定时的原理也是如此，不过它添加定时器时，自动把它放到定时器里面跑，所以不重启也会生效）
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+使用mybatis-plus自动填充功能时，如果出现空指针报错，多半是创建人没有从上下文中获取到就进行赋值导致报错，
+必须统一通过网关访问，获取到了token并存到了上下文，在携带token访问接口时就可以获取到登录人的信息，进行自动填充
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

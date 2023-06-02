@@ -1,7 +1,9 @@
 package com.yyy.system.service;
 
+import com.yyy.system.api.vo.SysLogininforVO;
+
 import java.util.List;
-import com.yyy.system.api.domain.SysLogininfor;
+
 
 /**
  * 系统访问日志情况信息 服务层
@@ -15,7 +17,7 @@ public interface ISysLogininforService
      * 
      * @param logininfor 访问日志对象
      */
-    public int insertLogininfor(SysLogininfor logininfor);
+    public int insertLogininfor(SysLogininforVO logininfor);
 
     /**
      * 查询系统登录日志集合
@@ -23,7 +25,7 @@ public interface ISysLogininforService
      * @param logininfor 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor);
+    public List<SysLogininforVO> selectLogininforList(SysLogininforVO logininfor);
 
     /**
      * 批量删除系统登录日志

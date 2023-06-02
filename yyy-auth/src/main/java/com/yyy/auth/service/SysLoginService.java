@@ -1,5 +1,6 @@
 package com.yyy.auth.service;
 
+import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.yyy.common.core.constant.Constants;
@@ -11,7 +12,6 @@ import com.yyy.common.core.exception.ServiceException;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.system.api.RemoteUserService;
-import com.yyy.system.api.domain.SysUser;
 import com.yyy.system.api.model.LoginUser;
 
 /**
@@ -71,7 +71,7 @@ public class SysLoginService
         }
         
         LoginUser userInfo = userResult.getData();
-        SysUser user = userResult.getData().getSysUser();
+        SysUserVO user = userResult.getData().getSysUserVO();
         if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
         {
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "对不起，您的账号已被删除");
@@ -114,11 +114,11 @@ public class SysLoginService
         }
 
         // 注册用户信息
-        SysUser sysUser = new SysUser();
-        sysUser.setUserName(username);
-        sysUser.setNickName(username);
-        sysUser.setPassword(SecurityUtils.encryptPassword(password));
-        R<?> registerResult = remoteUserService.registerUserInfo(sysUser, SecurityConstants.INNER);
+        SysUserVO SysUserVO = new SysUserVO();
+        SysUserVO.setUserName(username);
+        SysUserVO.setNickName(username);
+        SysUserVO.setPassword(SecurityUtils.encryptPassword(password));
+        R<?> registerResult = remoteUserService.registerUserInfo(SysUserVO, SecurityConstants.INNER);
 
         if (R.FAIL == registerResult.getCode())
         {
