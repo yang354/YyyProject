@@ -13,6 +13,8 @@
         <module>yyy-gen</module>
         <module>yyy-job</module>
         <module>yyy-file</module>
+        <module>yyy-file</module>
+        <module>yyy-rabbit</module>
     </modules>
 
     <artifactId>yzz-modules</artifactId>
