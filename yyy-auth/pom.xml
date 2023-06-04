@@ -45,18 +45,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-		
-        <!-- RuoYi Common Security-->
-        <dependency>
-            <groupId>com.yzz</groupId>
-            <artifactId>yzz-common-security</artifactId>
-        </dependency>
 
         <!-- Swagger UI -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.fox.version}</version>
+        </dependency>
+
+        <!-- RuoYi Common Security-->
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-security</artifactId>
         </dependency>
         <!-- RuoYi Common Swagger -->
         <dependency>

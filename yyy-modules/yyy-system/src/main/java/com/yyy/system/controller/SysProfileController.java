@@ -2,6 +2,7 @@ package com.yyy.system.controller;
 
 import java.util.Arrays;
 
+import com.yyy.common.file.service.ISysFileService;
 import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.service.TokenService;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.RemoteFileService;
-import com.yyy.system.api.domain.SysFile;
+import com.yyy.system.api.vo.SysFileVO;
 import com.yyy.system.api.model.LoginUser;
 import com.yyy.system.service.ISysUserService;
 
@@ -44,7 +44,7 @@ public class SysProfileController extends BaseController
     private TokenService tokenService;
     
     @Autowired
-    private RemoteFileService remoteFileService;
+    private ISysFileService remoteFileService;
 
     /**
      * 个人信息
@@ -131,8 +131,7 @@ public class SysProfileController extends BaseController
      */
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file)
-    {
+    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty())
         {
             LoginUser loginUser = SecurityUtils.getLoginUser();
@@ -141,7 +140,7 @@ public class SysProfileController extends BaseController
             {
                 return error("文件格式不正确，请上传" + Arrays.toString(MimeTypeUtils.IMAGE_EXTENSION) + "格式");
             }
-            R<SysFile> fileResult = remoteFileService.upload(file);
+            R<SysFileVO> fileResult = remoteFileService.uploadFile(file);
             if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData()))
             {
                 return error("文件服务异常，请联系管理员");

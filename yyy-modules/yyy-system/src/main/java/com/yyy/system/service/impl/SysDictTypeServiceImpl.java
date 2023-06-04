@@ -7,10 +7,9 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysDictType;
+import com.yyy.system.domain.SysDictType;
 import com.yyy.system.api.vo.SysDictDataVO;
 import com.yyy.system.api.vo.SysDictTypeVO;
-import com.yyy.system.service.ISysDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import com.yyy.common.core.constant.UserConstants;
 import com.yyy.common.core.exception.ServiceException;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.security.utils.DictUtils;
-import com.yyy.system.api.domain.SysDictData;
 
 import com.yyy.system.mapper.SysDictDataMapper;
 import com.yyy.system.mapper.SysDictTypeMapper;

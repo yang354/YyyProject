@@ -1,24 +1,27 @@
 package com.yyy.system.controller;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yyy.common.core.domain.R;
 
 
+import com.yyy.common.file.service.ISysFileService;
 import com.yyy.common.redis.utils.RedisLock;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDept;
+import com.yyy.common.sms.service.SmsService;
+import com.yyy.system.domain.SysDept;
+import com.yyy.system.api.vo.SysFileVO;
 import com.yyy.system.mapper.SysDeptMapper;
 import com.yyy.system.service.ISysDeptService;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2023/5/30 下午6:36
  */
 
+@Slf4j
 @RestController
 @RequestMapping("/test")
 public class TestController {
@@ -38,6 +42,9 @@ public class TestController {
     private ISysDeptService sysDeptService;
     @Resource
     private SysDeptMapper sysDeptMapper;
+    @Autowired
+    private SmsService smsService;
+
 
     /**
      * 测试获取项目本地文件
@@ -69,7 +76,7 @@ public class TestController {
 
 
     /**
-     * 测试锁
+     * 测试分布式锁
      */
     @GetMapping("/getLock")
     public R getLock(){
@@ -111,4 +118,47 @@ public class TestController {
         return R.ok("");
     }
 
+
+
+
+    @ApiOperation("测试获取手机验证码")
+    @GetMapping("/sendVerificationCode")
+    @ResponseBody
+    public R sendVerificationCode(String phone) {
+        try {
+
+//            if (StringUtils.isBlank(phone)){
+//                return R.fail("phone不能为空!");
+//            }
+            return R.ok(smsService.sendVerificationCode("18289339306"),"发送成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return R.fail("请求失败");
+    }
+
+
+    @Autowired
+    private ISysFileService sysFileService;
+
+    /**
+     * 文件上传请求   @RequestPart使用了这个注解，swagger的ui上就出现了文件选择框
+     */
+    @PostMapping("upload")
+    public R<SysFileVO> upload(@RequestPart(value = "file") MultipartFile file)
+    {
+        try
+        {
+            // 上传并返回访问地址
+            R<SysFileVO> sysFile = sysFileService.uploadFile(file);
+
+            return sysFile;
+        }
+        catch (Exception e)
+        {
+            log.error("上传文件失败", e);
+            return R.fail(e.getMessage());
+        }
+    }
 }

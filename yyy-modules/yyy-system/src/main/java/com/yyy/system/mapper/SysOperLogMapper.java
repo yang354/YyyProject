@@ -3,9 +3,8 @@ package com.yyy.system.mapper;
 import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysOperLog;
+import com.yyy.system.domain.SysOperLog;
 import com.yyy.system.api.vo.SysOperLogVO;
-import com.yyy.system.domain.SysNotice;
 
 /**
  * 操作日志 数据层

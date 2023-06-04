@@ -3,7 +3,6 @@ package com.yyy.system.mapper;
 import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysOperLog;
 import com.yyy.system.domain.SysPost;
 import com.yyy.system.vo.SysPostVO;
 

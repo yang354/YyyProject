@@ -7,7 +7,6 @@ import com.yyy.common.core.constant.CacheConstants;
 import com.yyy.common.core.utils.SpringUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.redis.service.RedisService;
-import com.yyy.system.api.domain.SysDictData;
 import com.yyy.system.api.vo.SysDictDataVO;
 
 /**

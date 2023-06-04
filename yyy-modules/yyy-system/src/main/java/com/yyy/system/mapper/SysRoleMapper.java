@@ -3,9 +3,8 @@ package com.yyy.system.mapper;
 import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysRole;
+import com.yyy.system.domain.SysRole;
 import com.yyy.system.api.vo.SysRoleVO;
-import com.yyy.system.domain.SysRoleDept;
 
 /**
  * 角色表 数据层

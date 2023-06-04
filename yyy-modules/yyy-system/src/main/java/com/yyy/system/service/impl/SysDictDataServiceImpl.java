@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yyy.system.api.vo.SysDictDataVO;
-import com.yyy.system.domain.SysConfig;
-import com.yyy.system.mapper.SysConfigMapper;
-import com.yyy.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yyy.common.security.utils.DictUtils;
-import com.yyy.system.api.domain.SysDictData;
+import com.yyy.system.domain.SysDictData;
 import com.yyy.system.mapper.SysDictDataMapper;
 import com.yyy.system.service.ISysDictDataService;
 

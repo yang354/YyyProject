@@ -108,6 +108,15 @@ public class RedisService
         return operation.get(key);
     }
 
+
+    /**
+     顺序递增
+     */
+    public long incrBy(String key, Long integer) {
+
+        return redisTemplate.boundValueOps(key).increment(integer);
+    }
+
     /**
      * 删除单个对象
      *

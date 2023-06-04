@@ -2,21 +2,16 @@ package com.yyy.gen.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yyy.common.core.domain.R;
-import com.yyy.common.core.web.page.TableDataInfo;
-import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.gen.domain.GenTableColumn;
-import com.yyy.gen.vo.GenTableVO;
-import com.yyy.gen.vo.GenTableColumnVO;
 import com.yyy.gen.mapper.GenTableColumnMapper;
 import com.yyy.gen.service.IGenTableColumnService;
-import com.yyy.system.api.domain.SysDept;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Author yzz

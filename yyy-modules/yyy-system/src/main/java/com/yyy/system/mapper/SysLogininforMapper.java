@@ -1,8 +1,8 @@
 package com.yyy.system.mapper;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysDictType;
-import com.yyy.system.api.domain.SysLogininfor;
+
+import com.yyy.system.domain.SysLogininfor;
 import com.yyy.system.api.vo.SysLogininforVO;
 
 import java.util.List;

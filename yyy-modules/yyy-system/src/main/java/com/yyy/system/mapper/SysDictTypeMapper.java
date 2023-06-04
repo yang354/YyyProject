@@ -4,7 +4,7 @@ package com.yyy.system.mapper;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.api.vo.SysDictTypeVO;
-import com.yyy.system.api.domain.SysDictType;
+import com.yyy.system.domain.SysDictType;
 import java.util.List;
 
 

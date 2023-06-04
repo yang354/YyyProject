@@ -1,0 +1,5 @@
+com.yyy.common.file.config.AliyunConfig
+com.yyy.common.file.config.ResourcesConfig
+com.yyy.common.file.service.AliyunServiceImpl
+com.yyy.common.file.service.LocalSysFileServiceImpl
+

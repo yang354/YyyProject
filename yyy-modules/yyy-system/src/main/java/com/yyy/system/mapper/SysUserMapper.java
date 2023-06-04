@@ -3,9 +3,8 @@ package com.yyy.system.mapper;
 import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysUser;
+import com.yyy.system.domain.SysUser;
 import com.yyy.system.api.vo.SysUserVO;
-import com.yyy.system.domain.SysRoleMenu;
 import org.apache.ibatis.annotations.Param;
 
 

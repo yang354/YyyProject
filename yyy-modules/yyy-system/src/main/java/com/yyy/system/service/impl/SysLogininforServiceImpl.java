@@ -3,11 +3,8 @@ package com.yyy.system.service.impl;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysDictType;
-import com.yyy.system.api.domain.SysLogininfor;
+import com.yyy.system.domain.SysLogininfor;
 import com.yyy.system.api.vo.SysLogininforVO;
-import com.yyy.system.mapper.SysDictTypeMapper;
-import com.yyy.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yyy.system.mapper.SysLogininforMapper;

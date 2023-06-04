@@ -6,9 +6,8 @@ import java.util.stream.Collectors;
 import javax.validation.Validator;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysUser;
+import com.yyy.system.domain.SysUser;
 import com.yyy.system.api.vo.SysUserVO;
-import com.yyy.system.service.ISysPostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

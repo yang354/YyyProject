@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
 import com.yyy.system.api.vo.SysDictDataVO;
-import com.yyy.system.domain.SysConfig;
 import org.apache.ibatis.annotations.Param;
-import com.yyy.system.api.domain.SysDictData;
+import com.yyy.system.domain.SysDictData;
 
 /**
  * 字典表 数据层

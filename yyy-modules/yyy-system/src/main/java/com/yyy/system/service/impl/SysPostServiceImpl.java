@@ -3,10 +3,7 @@ package com.yyy.system.service.impl;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysOperLog;
 import com.yyy.system.domain.SysPost;
-import com.yyy.system.mapper.SysOperLogMapper;
-import com.yyy.system.service.ISysOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yyy.common.core.constant.UserConstants;

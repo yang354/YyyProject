@@ -3,8 +3,8 @@ package com.yyy.system.service;
 import java.util.List;
 import java.util.Set;
 import com.yyy.system.vo.SysMenuVO;
-import com.yyy.system.domain.vo.RouterVo;
-import com.yyy.system.domain.vo.TreeSelect;
+import com.yyy.system.vo.RouterVo;
+import com.yyy.system.vo.TreeSelect;
 
 /**
  * 菜单 业务层

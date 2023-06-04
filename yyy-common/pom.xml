@@ -17,6 +17,8 @@
         <module>yyy-common-security</module>
         <module>yyy-common-datascope</module>
         <module>yyy-common-datasource</module>
+        <module>yyy-common-sms</module>
+        <module>yyy-common-file</module>
     </modules>
 
     <artifactId>yzz-common</artifactId>

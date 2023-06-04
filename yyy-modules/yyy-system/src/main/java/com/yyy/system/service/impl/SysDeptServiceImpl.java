@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysDept;
+import com.yyy.system.domain.SysDept;
 import com.yyy.system.api.vo.SysDeptVO;
 import com.yyy.system.api.vo.SysUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import com.yyy.common.datascope.annotation.DataScope;
 import com.yyy.common.security.utils.SecurityUtils;
 
 import com.yyy.system.api.vo.SysRoleVO;
-import com.yyy.system.domain.vo.TreeSelect;
+import com.yyy.system.vo.TreeSelect;
 import com.yyy.system.mapper.SysDeptMapper;
 import com.yyy.system.mapper.SysRoleMapper;
 import com.yyy.system.service.ISysDeptService;

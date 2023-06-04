@@ -78,6 +78,16 @@
             <artifactId>yzz-common-swagger</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-sms</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-file</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

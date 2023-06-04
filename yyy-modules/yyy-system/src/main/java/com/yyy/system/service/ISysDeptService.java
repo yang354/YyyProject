@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.yyy.common.core.web.page.IServicePlus;
 
-import com.yyy.system.api.domain.SysDept;
+import com.yyy.system.domain.SysDept;
 import com.yyy.system.api.vo.SysDeptVO;
-import com.yyy.system.domain.vo.TreeSelect;
+import com.yyy.system.vo.TreeSelect;
 
 /**
  * 部门管理 服务层

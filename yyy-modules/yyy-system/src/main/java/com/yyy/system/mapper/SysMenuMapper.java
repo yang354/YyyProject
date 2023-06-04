@@ -3,7 +3,6 @@ package com.yyy.system.mapper;
 import java.util.List;
 
 import com.yyy.common.core.web.page.BaseMapperPlus;
-import com.yyy.system.api.domain.SysLogininfor;
 import com.yyy.system.domain.SysMenu;
 import org.apache.ibatis.annotations.Param;
 import com.yyy.system.vo.SysMenuVO;

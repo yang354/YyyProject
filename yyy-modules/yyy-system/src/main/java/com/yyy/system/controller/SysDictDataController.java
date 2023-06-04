@@ -24,7 +24,6 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.domain.SysDictData;
 import com.yyy.system.service.ISysDictDataService;
 import com.yyy.system.service.ISysDictTypeService;
 

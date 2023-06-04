@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yyy.system.api.domain.SysRole;
+import com.yyy.system.domain.SysRole;
 import com.yyy.system.api.vo.SysUserVO;
 import com.yyy.system.mapper.*;
-import com.yyy.system.service.ISysPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
