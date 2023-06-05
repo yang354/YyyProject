@@ -1,8 +1,7 @@
 package com.yyy.common.datasource.mybatisplus;
 
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.yyy.common.core.SecurityUtils;
+import com.yyy.common.security.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;

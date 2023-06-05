@@ -45,6 +45,10 @@
             <groupId>com.yzz</groupId>
             <artifactId>yzz-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yzz</groupId>
+            <artifactId>yzz-common-security</artifactId>
+        </dependency>
 
     </dependencies>
 </project>
