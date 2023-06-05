@@ -79,4 +79,9 @@ public class CacheConstants
      * 授权信息字段
      */
     public static final String AUTHORIZATION_HEADER = "authorization";
+
+    /**
+     * 限流 redis key
+     */
+    public static final String RATE_LIMIT_KEY = "rate_limit:";
 }

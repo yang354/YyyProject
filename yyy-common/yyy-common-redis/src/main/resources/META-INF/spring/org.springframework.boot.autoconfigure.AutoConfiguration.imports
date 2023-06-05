@@ -1,3 +1,5 @@
 com.yyy.common.redis.configure.RedisConfig
 com.yyy.common.redis.service.RedisService
 com.yyy.common.redis.utils.RedisLock
+com.yyy.common.redis.aspect.RateLimiterAspect
+com.yyy.common.redis.configure.RedisCacheConfig

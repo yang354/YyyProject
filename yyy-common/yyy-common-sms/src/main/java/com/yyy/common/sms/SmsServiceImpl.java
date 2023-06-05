@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.yyy.common.core.constant.SmsConstants.SMS_PHONE_VERIFICATION_CODE;
+import static com.yyy.common.core.constant.SmsConstants.SMS_PHONE_VERIFICATION_CODE_COUNT;
+
 /**
  * @Author yzz
  * @Date 2023/5/30 下午6:36
@@ -70,14 +73,14 @@ public class SmsServiceImpl implements SmsService {
         sendSmsRequest.setTemplateID(TemplateID);
         String verificationCode=String.valueOf(NumberUtils.buildRandom(6));
         log.info("手机号码:{},验证码{}",phone,verificationCode);
-        redisUtil.setCacheObject("sms:phone:verification_code:" + phone, verificationCode,60l*10, TimeUnit.SECONDS);
-        if(redisUtil.hasKey("sms:phone:verification_code_count:" + phone)){
-            String count=redisUtil.getCacheObject("sms:phone:verification_code_count:" + phone);
+        redisUtil.setCacheObject(SMS_PHONE_VERIFICATION_CODE + phone, verificationCode,60l*10, TimeUnit.SECONDS);
+        if(redisUtil.hasKey(SMS_PHONE_VERIFICATION_CODE_COUNT + phone)){
+            String count=redisUtil.getCacheObject(SMS_PHONE_VERIFICATION_CODE_COUNT + phone);
             if("6".equals(count)){
                 //return new SendSmsResponse();
                 return false;
             }else{
-                redisUtil.incrBy("sms:phone:verification_code" + phone,Long.valueOf(count));
+                redisUtil.incrBy(SMS_PHONE_VERIFICATION_CODE + phone,Long.valueOf(count));
             }
         }
         String [] templateParam={verificationCode,"10"};//模版参数，从前往后对应的是模版的{1}、{2}等,见《创建短信签名和模版》小节

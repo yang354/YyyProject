@@ -1,10 +1,12 @@
 package com.yyy.system.controller;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yyy.common.core.domain.R;
 
 
 import com.yyy.common.file.service.ISysFileService;
+import com.yyy.common.redis.annotation.RateLimiter;
 import com.yyy.common.redis.utils.RedisLock;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.common.sms.service.SmsService;
@@ -16,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,16 +63,18 @@ public class TestController {
     /**
      * 测试mybatis-plus
      */
+    @Cacheable(value = "Dept", key = "'getDept'",sync = true)
+    @RateLimiter
     @GetMapping("/getDept")
     public R getDept(){
 
-//        QueryWrapper<SysDept> sysDeptQueryWrapper = new QueryWrapper<>();
-//        sysDeptQueryWrapper.eq("dept_id",104l);
-//        SysDept SysDeptVO = sysDeptService.getOne(sysDeptQueryWrapper);
+        QueryWrapper<SysDept> sysDeptQueryWrapper = new QueryWrapper<>();
+        sysDeptQueryWrapper.eq("dept_id",104l);
+        SysDept SysDeptVO = sysDeptService.getOne(sysDeptQueryWrapper);
         System.out.println(SecurityUtils.getUsername()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        SysDept sysDept = new SysDept();
-        sysDept.setDeptName("菜市场部");
-        sysDeptMapper.insert(sysDept);
+//        SysDept sysDept = new SysDept();
+//        sysDept.setDeptName("菜市场部");
+//        sysDeptMapper.insert(sysDept);
 
         return R.ok("获取成功");
     }
