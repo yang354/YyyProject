@@ -1,0 +1,21 @@
+打开Terminal控制台
+
+输入 sh xxx.sh
+
+
+# 开启所需端口
+./deploy.sh port
+
+# 启动基础环境（必须）
+./deploy.sh base
+
+./deploy.sh base2
+
+# 启动程序模块（必须）
+./deploy.sh modules
+
+# 关闭所有环境/模块
+./deploy.sh stop
+
+# 删除所有环境/模块
+./deploy.sh rm

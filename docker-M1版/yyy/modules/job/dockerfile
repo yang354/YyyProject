@@ -1,0 +1,15 @@
+# 基础镜像
+FROM  openjdk:8-jre
+# author
+MAINTAINER yyy
+
+# 挂载目录
+VOLUME /home/yyy
+# 创建目录
+RUN mkdir -p /home/yyy
+# 指定路径
+WORKDIR /home/yyy
+# 复制jar文件到路径
+COPY ./jar/yzz-modules-job.jar /home/yyy/yzz-modules-job.jar
+# 启动定时任务服务
+ENTRYPOINT ["java","-jar","yzz-modules-job.jar"]

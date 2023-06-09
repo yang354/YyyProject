@@ -1,0 +1,13 @@
+# 基础镜像
+FROM redis
+# author
+MAINTAINER yyy
+
+# 挂载目录
+VOLUME /home/yyy/redis
+# 创建目录
+RUN mkdir -p /home/yyy/redis
+# 指定路径
+WORKDIR /home/yyy/redis
+# 复制conf文件到路径
+COPY ./conf/redis.conf /home/yyy/redis/redis.conf

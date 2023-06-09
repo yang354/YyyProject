@@ -1,0 +1,18 @@
+我们执行命令
+docker ps -a
+查看所有运行的容器
+
+删除运行失败的
+docker rm -f xxx
+
+更换arm版本依赖
+docker pull nacos/nacos-server:v2.1.2-slim
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+然后安装成功发现运行正常，却连接不了（可能问题导致如下）
+是因为我们一起创建了mysql、redis、nacos
+由于创建mysql的时候应该执行初始化sql脚本的，初始化sql脚本失败，但是对创建mysql成功没有影响 （已解决-添加创建数据库并使用该库 的 sql语句）
+而当到创建nacos时，没有从mysql中找到config的库，导致nacos表面创建成功了，实际上是还没成功
+
+所以我们的解决办法是 先分步安装好mysql 和 redis ，在去连接mysql ,创建好 config 的库，在去执行docker-compose脚本创建 nacos
+

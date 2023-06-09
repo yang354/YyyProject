@@ -1,0 +1,11 @@
+我们执行命令
+docker ps -a
+查看所有运行的容器
+
+发现运行正常，却连接不了
+是因为我们一起创建了mysql、redis、nacos
+由于创建mysql的时候应该执行初始化sql脚本的，初始化sql脚本失败，但是对创建mysql成功没有影响
+而当到创建nacos时，没有从mysql中找到config的库，导致nacos表面创建成功了，实际上是还没成功  （已解决-添加创建数据库并使用该库 的 sql语句）
+
+另外千万注意：不要随便执行docker-compose脚本命令，小心重新初始化了，导致nacos又创建失败，尤其mysql,初始化了数据库就别删除了
+所以我们的解决办法是 先分步安装好mysql 和 redis ，在去连接mysql ,创建好 config 的库，在去执行docker-compose脚本创建 nacos

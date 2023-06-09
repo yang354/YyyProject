@@ -1,0 +1,54 @@
+打开Terminal控制台
+
+输入 sh xxx.sh
+
+
+
+# 开启所需端口
+./deploy.sh port
+
+# 启动基础环境（必须）
+./deploy.sh base
+
+./deploy.sh base2
+
+# 启动程序模块（必须）
+./deploy.sh modules
+
+# 关闭所有环境/模块
+./deploy.sh stop
+
+# 删除所有环境/模块
+./deploy.sh rm
+
+
+快速查看日志
+docker logs -f -t --tail 50 yyy-modules-system
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+linux使用docker部署springboot
+配置的logback.xml文件的日志输出路径为/root/logs/yyy-system
+docker 如何查看
+先进入容器
+docker exec -it yyy-modules-system(容器名) /bin/sh
+ls 会看到自动创建了logs目录，里面存放日志
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在springboot项目日志文件中写的路径是 /root/logs/yyy-system   所以以后我们都可以参照写在/root 目录下
+如何挂载到centos本地，方便查看
+先进入容器
+一层一层进入日志输出的地方  容器路径对应是 /home/yyy/logs/yyy-system
+然后pwd 拷贝全路径
+在docker-compose文件挂载文件
+例如  /root/logs/yyy-system (我的centos本地路径)   /home/yyy/logs/yyy-system（yyy-modules-system里存放日志的路径）
+    ports:
+      - "9201:9201"
+    volumes:
+      - /root/logs/yyy-system:/home/yyy/logs/yyy-system
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+上传文件映射也可以参照如此挂载
+
+
+
+
+

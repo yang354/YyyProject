@@ -47,17 +47,18 @@ http://127.0.0.1:8080/swagger-ui/index.html
 登录用户名 admin
 登录密码 admin123
 
+如果不知道密码，可以全局搜索看  encryptPassword  这个方法，重新生成密码
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 调用接口如何携带token
 第一种通过postMan访问接口
 
 key值   Authorization
-value值  Bearer xxxxxtokenxxxxx
+value值  xxxxxtokenxxxxx
 
 
 第二种通过swagger - 网关模块
-value值  Bearer xxxxxtokenxxxxx
-Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2tleSI6ImJmNmU3ZDE2LTYxMDUtNDcwOS04MWUyLTA0ODU5MmJmNWU4OSIsInVzZXJuYW1lIjoiYWRtaW4ifQ.KsZnrwlVVJpeK5bTRK7Eb8thX7RgBEl3megz6AYqhMjl2xUdB0bbixPQ1AlGoPVlhTumEgfy9UVJHBnLhJqeNw
+value值  xxxxxtokenxxxxx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 如何使用远程调用
 首先启动调用的接口方的服务模块要启动和被调用方的服务模块要启动
@@ -155,3 +156,7 @@ datasource:
 必须统一通过网关访问，获取到了token并存到了上下文，在携带token访问接口时就可以获取到登录人的信息，进行自动填充
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+部署详情查看下面连接
+https://blog.csdn.net/zht3306/article/details/124687425?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168602279916800227471915%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168602279916800227471915&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-124687425-null-null.142^v88^control_2,239^v2^insert_chatgpt&utm_term=ruoyi%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2&spm=1018.2226.3001.4187
+
+

@@ -1,0 +1,16 @@
+# 基础镜像
+FROM  openjdk:8-jre
+# author
+MAINTAINER yyy
+
+# 挂载目录
+VOLUME /home/yyy
+# 创建目录
+RUN mkdir -p /home/yyy
+# 指定路径
+WORKDIR /home/yyy
+# 复制jar文件到路径
+COPY ./jar/yzz-auth.jar /home/yyy/yzz-auth.jar
+# 启动认证服务
+ENTRYPOINT ["java","-jar","yzz-auth.jar"]
+

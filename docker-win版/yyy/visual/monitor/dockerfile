@@ -1,0 +1,15 @@
+# 基础镜像
+FROM  openjdk:8-jre
+# author
+MAINTAINER yyy
+
+# 挂载目录
+VOLUME /home/yyy
+# 创建目录
+RUN mkdir -p /home/yyy
+# 指定路径
+WORKDIR /home/yyy
+# 复制jar文件到路径
+COPY ./jar/yzz-visual-monitor.jar /home/yyy/yzz-visual-monitor.jar
+# 启动系统服务
+ENTRYPOINT ["java","-jar","yzz-visual-monitor.jar"]
