@@ -34,7 +34,7 @@ import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.utils.SecurityUtils;
 
 import com.yyy.system.api.vo.SysRoleVO;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import com.yyy.system.service.ISysConfigService;
 import com.yyy.system.service.ISysDeptService;
 import com.yyy.system.service.ISysPermissionService;
@@ -115,7 +115,7 @@ public class SysUserController extends BaseController
      */
     @InnerAuth
     @GetMapping("/info/{username}")
-    public R<LoginUser> info(@PathVariable("username") String username)
+    public R<LoginUserVO> info(@PathVariable("username") String username)
     {
         SysUserVO SysUserVO = userService.selectUserByUserName(username);
         if (StringUtils.isNull(SysUserVO))
@@ -126,7 +126,7 @@ public class SysUserController extends BaseController
         Set<String> roles = permissionService.getRolePermission(SysUserVO);
         // 权限集合
         Set<String> permissions = permissionService.getMenuPermission(SysUserVO);
-        LoginUser sysUserVo = new LoginUser();
+        LoginUserVO sysUserVo = new LoginUserVO();
         sysUserVo.setSysUserVO(SysUserVO);
         sysUserVo.setRoles(roles);
         sysUserVo.setPermissions(permissions);

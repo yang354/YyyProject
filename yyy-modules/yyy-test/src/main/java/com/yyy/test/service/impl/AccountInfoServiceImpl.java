@@ -1,13 +1,12 @@
-package com.yyy.system.service.impl;
+package com.yyy.test.service.impl;
 
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.yyy.system.mapper.AccountInfoMapper;
-import com.yyy.system.service.AccountInfoService;
+import com.yyy.test.mapper.AccountInfoMapper;
+import com.yyy.test.service.AccountInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Administrator
@@ -18,11 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountInfoServiceImpl implements AccountInfoService {
 
     @Autowired
-    AccountInfoMapper accountInfoDao;
+    private AccountInfoMapper accountInfoDao;
 
 
 
-    @DS("bank1")
     @Override
     public void updateAccountBalance(String accountNo, Double amount) {
 

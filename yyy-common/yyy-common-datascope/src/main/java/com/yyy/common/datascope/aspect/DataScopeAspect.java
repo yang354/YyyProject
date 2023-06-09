@@ -16,7 +16,7 @@ import com.yyy.common.datascope.annotation.DataScope;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.system.api.vo.SysRoleVO;
 
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 数据过滤处理
@@ -67,7 +67,7 @@ public class DataScopeAspect
     protected void handleDataScope(final JoinPoint joinPoint, DataScope controllerDataScope)
     {
         // 获取当前的用户
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        LoginUserVO loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNotNull(loginUser))
         {
             SysUserVO currentUser = loginUser.getSysUserVO();

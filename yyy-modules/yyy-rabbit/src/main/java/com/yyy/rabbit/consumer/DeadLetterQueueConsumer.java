@@ -4,7 +4,7 @@ import com.rabbitmq.client.Channel;
 import com.yyy.common.core.constant.SecurityConstants;
 import com.yyy.common.core.domain.R;
 import com.yyy.system.api.RemoteUserService;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -30,7 +30,7 @@ public class DeadLetterQueueConsumer {
     @RabbitListener(queues = DEAD_LETTER_QUEUE_A_NAME)
     public void receiveA(Message message, Channel channel) throws Exception {
         // 查询用户信息
-        R<LoginUser> userResult = remoteUserService.getUserInfo("admin", SecurityConstants.INNER);
+        R<LoginUserVO> userResult = remoteUserService.getUserInfo("admin", SecurityConstants.INNER);
         System.out.println(userResult.getData());
         this.messageHan(message, channel);
     }

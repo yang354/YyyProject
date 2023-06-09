@@ -19,7 +19,7 @@ import com.yyy.common.log.annotation.Log;
 import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.redis.service.RedisService;
 import com.yyy.common.security.annotation.RequiresPermissions;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import com.yyy.system.vo.SysUserOnlineVO;
 import com.yyy.system.service.ISysUserOnlineService;
 
@@ -46,7 +46,7 @@ public class SysUserOnlineController extends BaseController
         List<SysUserOnlineVO> userOnlineList = new ArrayList<SysUserOnlineVO>();
         for (String key : keys)
         {
-            LoginUser user = redisService.getCacheObject(key);
+            LoginUserVO user = redisService.getCacheObject(key);
             if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName))
             {
                 if (StringUtils.equals(ipaddr, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername()))

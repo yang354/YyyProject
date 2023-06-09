@@ -1,6 +1,6 @@
 package com.yyy.system.service;
 
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import com.yyy.system.vo.SysUserOnlineVO;
 
 /**
@@ -17,7 +17,7 @@ public interface ISysUserOnlineService
      * @param user 用户信息
      * @return 在线用户信息
      */
-    public SysUserOnlineVO selectOnlineByIpaddr(String ipaddr, LoginUser user);
+    public SysUserOnlineVO selectOnlineByIpaddr(String ipaddr, LoginUserVO user);
 
     /**
      * 通过用户名称查询信息
@@ -26,7 +26,7 @@ public interface ISysUserOnlineService
      * @param user 用户信息
      * @return 在线用户信息
      */
-    public SysUserOnlineVO selectOnlineByUserName(String userName, LoginUser user);
+    public SysUserOnlineVO selectOnlineByUserName(String userName, LoginUserVO user);
 
     /**
      * 通过登录地址/用户名称查询信息
@@ -36,7 +36,7 @@ public interface ISysUserOnlineService
      * @param user 用户信息
      * @return 在线用户信息
      */
-    public SysUserOnlineVO selectOnlineByInfo(String ipaddr, String userName, LoginUser user);
+    public SysUserOnlineVO selectOnlineByInfo(String ipaddr, String userName, LoginUserVO user);
 
     /**
      * 设置在线用户信息
@@ -44,5 +44,5 @@ public interface ISysUserOnlineService
      * @param user 用户信息
      * @return 在线用户
      */
-    public SysUserOnlineVO loginUserToUserOnline(LoginUser user);
+    public SysUserOnlineVO loginUserToUserOnline(LoginUserVO user);
 }

@@ -10,7 +10,7 @@ import com.yyy.common.core.utils.ServletUtils;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.security.auth.AuthUtil;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 自定义请求头拦截器，将Header数据封装到线程变量中方便获取
@@ -35,7 +35,7 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor
         String token = SecurityUtils.getToken();
         if (StringUtils.isNotEmpty(token))
         {
-            LoginUser loginUser = AuthUtil.getLoginUser(token);
+            LoginUserVO loginUser = AuthUtil.getLoginUser(token);
             if (StringUtils.isNotNull(loginUser))
             {
                 AuthUtil.verifyLoginUserExpire(loginUser);

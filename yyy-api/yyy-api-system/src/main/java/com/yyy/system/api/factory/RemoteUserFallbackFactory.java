@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.yyy.common.core.domain.R;
 import com.yyy.system.api.RemoteUserService;
 
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 用户服务降级处理
@@ -27,7 +27,7 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
         return new RemoteUserService()
         {
             @Override
-            public R<LoginUser> getUserInfo(String username, String source)
+            public R<LoginUserVO> getUserInfo(String username, String source)
             {
                 return R.fail("获取用户失败:" + throwable.getMessage());
             }

@@ -2,7 +2,7 @@ package com.yyy.common.security.auth;
 
 import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.annotation.RequiresRoles;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * Token 权限验证工具类
@@ -45,7 +45,7 @@ public class AuthUtil
     /**
      * 获取当前登录用户信息
      */
-    public static LoginUser getLoginUser(String token)
+    public static LoginUserVO getLoginUser(String token)
     {
         return authLogic.getLoginUser(token);
     }
@@ -53,7 +53,7 @@ public class AuthUtil
     /**
      * 验证当前用户有效期
      */
-    public static void verifyLoginUserExpire(LoginUser loginUser)
+    public static void verifyLoginUserExpire(LoginUserVO loginUser)
     {
         authLogic.verifyLoginUserExpire(loginUser);
     }

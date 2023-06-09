@@ -2,7 +2,6 @@ package com.yyy.auth.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,7 @@ import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.security.auth.AuthUtil;
 import com.yyy.common.security.service.TokenService;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * token 控制
@@ -37,7 +36,7 @@ public class TokenController
     public R<?> login(@RequestBody LoginBody form)
     {
         // 用户登录
-        LoginUser userInfo = sysLoginService.login(form.getUsername(), form.getPassword());
+        LoginUserVO userInfo = sysLoginService.login(form.getUsername(), form.getPassword());
         // 获取登录token
         return R.ok(tokenService.createToken(userInfo));
     }
@@ -60,7 +59,7 @@ public class TokenController
     @PostMapping("refresh")
     public R<?> refresh(HttpServletRequest request)
     {
-        LoginUser loginUser = tokenService.getLoginUser(request);
+        LoginUserVO loginUser = tokenService.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser))
         {
             // 刷新令牌有效期

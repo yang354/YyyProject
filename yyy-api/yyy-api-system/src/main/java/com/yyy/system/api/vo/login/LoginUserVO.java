@@ -1,4 +1,4 @@
-package com.yyy.system.api.model;
+package com.yyy.system.api.vo.login;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -12,7 +12,7 @@ import lombok.Data;
 * @author 羊扬杨
  */
 @Data
-public class LoginUser implements Serializable
+public class LoginUserVO implements Serializable
 {
     private static final long serialVersionUID = 1L;
 

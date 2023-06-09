@@ -11,7 +11,7 @@ import com.yyy.common.core.constant.SecurityConstants;
 import com.yyy.common.core.constant.ServiceNameConstants;
 import com.yyy.common.core.domain.R;
 import com.yyy.system.api.factory.RemoteUserFallbackFactory;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 用户服务
@@ -29,7 +29,7 @@ public interface RemoteUserService
      * @return 结果
      */
     @GetMapping("/user/info/{username}")
-    public R<LoginUser> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
+    public R<LoginUserVO> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.FROM_SOURCE) String source);
 
     /**
      * 注册用户信息

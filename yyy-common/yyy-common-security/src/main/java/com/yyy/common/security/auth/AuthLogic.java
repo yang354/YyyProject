@@ -16,7 +16,7 @@ import com.yyy.common.security.annotation.RequiresPermissions;
 import com.yyy.common.security.annotation.RequiresRoles;
 import com.yyy.common.security.service.TokenService;
 import com.yyy.common.security.utils.SecurityUtils;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * Token 权限验证，逻辑实现类
@@ -67,14 +67,14 @@ public class AuthLogic
      * 
      * @return 用户缓存信息
      */
-    public LoginUser getLoginUser()
+    public LoginUserVO getLoginUser()
     {
         String token = SecurityUtils.getToken();
         if (token == null)
         {
             throw new NotLoginException("未提供token");
         }
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        LoginUserVO loginUser = SecurityUtils.getLoginUser();
         if (loginUser == null)
         {
             throw new NotLoginException("无效的token");
@@ -88,7 +88,7 @@ public class AuthLogic
      * @param token 前端传递的认证信息
      * @return 用户缓存信息
      */
-    public LoginUser getLoginUser(String token)
+    public LoginUserVO getLoginUser(String token)
     {
         return tokenService.getLoginUser(token);
     }
@@ -98,7 +98,7 @@ public class AuthLogic
      * 
      * @param loginUser 当前用户信息
      */
-    public void verifyLoginUserExpire(LoginUser loginUser)
+    public void verifyLoginUserExpire(LoginUserVO loginUser)
     {
         tokenService.verifyToken(loginUser);
     }
@@ -318,7 +318,7 @@ public class AuthLogic
     {
         try
         {
-            LoginUser loginUser = getLoginUser();
+            LoginUserVO loginUser = getLoginUser();
             return loginUser.getRoles();
         }
         catch (Exception e)
@@ -336,7 +336,7 @@ public class AuthLogic
     {
         try
         {
-            LoginUser loginUser = getLoginUser();
+            LoginUserVO loginUser = getLoginUser();
             return loginUser.getPermissions();
         }
         catch (Exception e)

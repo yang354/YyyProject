@@ -12,7 +12,7 @@ import com.yyy.common.core.exception.ServiceException;
 import com.yyy.common.core.utils.StringUtils;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.system.api.RemoteUserService;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 登录校验方法
@@ -34,7 +34,7 @@ public class SysLoginService
     /**
      * 登录
      */
-    public LoginUser login(String username, String password)
+    public LoginUserVO login(String username, String password)
     {
         // 用户名或密码为空 错误
         if (StringUtils.isAnyBlank(username, password))
@@ -57,7 +57,7 @@ public class SysLoginService
             throw new ServiceException("用户名不在指定范围");
         }
         // 查询用户信息
-        R<LoginUser> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
+        R<LoginUserVO> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
 
         if (StringUtils.isNull(userResult) || StringUtils.isNull(userResult.getData()))
         {
@@ -70,7 +70,7 @@ public class SysLoginService
             throw new ServiceException(userResult.getMsg());
         }
         
-        LoginUser userInfo = userResult.getData();
+        LoginUserVO userInfo = userResult.getData();
         SysUserVO user = userResult.getData().getSysUserVO();
         if (UserStatus.DELETED.getCode().equals(user.getDelFlag()))
         {

@@ -7,7 +7,7 @@ import com.yyy.common.core.constant.TokenConstants;
 import com.yyy.common.core.context.SecurityContextHolder;
 import com.yyy.common.core.utils.ServletUtils;
 import com.yyy.common.core.utils.StringUtils;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 
 /**
  * 权限获取工具类
@@ -43,9 +43,9 @@ public class SecurityUtils
     /**
      * 获取登录用户信息
      */
-    public static LoginUser getLoginUser()
+    public static LoginUserVO getLoginUser()
     {
-        return SecurityContextHolder.get(SecurityConstants.LOGIN_USER, LoginUser.class);
+        return SecurityContextHolder.get(SecurityConstants.LOGIN_USER, LoginUserVO.class);
     }
 
     /**

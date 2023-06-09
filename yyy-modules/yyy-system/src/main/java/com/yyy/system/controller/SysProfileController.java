@@ -25,7 +25,7 @@ import com.yyy.common.log.enums.BusinessType;
 import com.yyy.common.security.service.TokenService;
 import com.yyy.common.security.utils.SecurityUtils;
 import com.yyy.system.api.vo.SysFileVO;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import com.yyy.system.service.ISysUserService;
 
 /**
@@ -67,7 +67,7 @@ public class SysProfileController extends BaseController
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUserVO user)
     {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        LoginUserVO loginUser = SecurityUtils.getLoginUser();
         SysUserVO SysUserVO = loginUser.getSysUserVO();
         user.setUserName(SysUserVO.getUserName());
         if (StringUtils.isNotEmpty(user.getPhonenumber())
@@ -118,7 +118,7 @@ public class SysProfileController extends BaseController
         if (userService.resetUserPwd(username, SecurityUtils.encryptPassword(newPassword)) > 0)
         {
             // 更新缓存用户密码
-            LoginUser loginUser = SecurityUtils.getLoginUser();
+            LoginUserVO loginUser = SecurityUtils.getLoginUser();
             loginUser.getSysUserVO().setPassword(SecurityUtils.encryptPassword(newPassword));
             tokenService.setLoginUser(loginUser);
             return success();
@@ -134,7 +134,7 @@ public class SysProfileController extends BaseController
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty())
         {
-            LoginUser loginUser = SecurityUtils.getLoginUser();
+            LoginUserVO loginUser = SecurityUtils.getLoginUser();
             String extension = FileTypeUtils.getExtension(file);
             if (!StringUtils.equalsAnyIgnoreCase(extension, MimeTypeUtils.IMAGE_EXTENSION))
             {

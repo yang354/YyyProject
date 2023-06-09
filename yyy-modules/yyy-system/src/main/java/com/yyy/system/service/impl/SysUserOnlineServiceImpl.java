@@ -2,7 +2,7 @@ package com.yyy.system.service.impl;
 
 import org.springframework.stereotype.Service;
 import com.yyy.common.core.utils.StringUtils;
-import com.yyy.system.api.model.LoginUser;
+import com.yyy.system.api.vo.login.LoginUserVO;
 import com.yyy.system.vo.SysUserOnlineVO;
 import com.yyy.system.service.ISysUserOnlineService;
 
@@ -22,7 +22,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @return 在线用户信息
      */
     @Override
-    public SysUserOnlineVO selectOnlineByIpaddr(String ipaddr, LoginUser user)
+    public SysUserOnlineVO selectOnlineByIpaddr(String ipaddr, LoginUserVO user)
     {
         if (StringUtils.equals(ipaddr, user.getIpaddr()))
         {
@@ -39,7 +39,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @return 在线用户信息
      */
     @Override
-    public SysUserOnlineVO selectOnlineByUserName(String userName, LoginUser user)
+    public SysUserOnlineVO selectOnlineByUserName(String userName, LoginUserVO user)
     {
         if (StringUtils.equals(userName, user.getUsername()))
         {
@@ -57,7 +57,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @return 在线用户信息
      */
     @Override
-    public SysUserOnlineVO selectOnlineByInfo(String ipaddr, String userName, LoginUser user)
+    public SysUserOnlineVO selectOnlineByInfo(String ipaddr, String userName, LoginUserVO user)
     {
         if (StringUtils.equals(ipaddr, user.getIpaddr()) && StringUtils.equals(userName, user.getUsername()))
         {
@@ -73,7 +73,7 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
      * @return 在线用户
      */
     @Override
-    public SysUserOnlineVO loginUserToUserOnline(LoginUser user)
+    public SysUserOnlineVO loginUserToUserOnline(LoginUserVO user)
     {
         if (StringUtils.isNull(user))
         {

@@ -1,4 +1,4 @@
-package com.yyy.system.mapper;
+package com.yyy.test.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
