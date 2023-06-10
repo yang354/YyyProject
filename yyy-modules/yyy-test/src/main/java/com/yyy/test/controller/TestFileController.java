@@ -21,7 +21,7 @@ import java.io.File;
 @Api(tags = {"测试文件功能"})
 @Slf4j
 @RestController
-@RequestMapping("/file")
+@RequestMapping("file")
 public class TestFileController {
 
     @Value("${fileTemplate.profile}")

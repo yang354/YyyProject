@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Api(tags = {"测试分布式锁功能"})
 @Slf4j
 @RestController
-@RequestMapping("/lcok")
+@RequestMapping("lcok")
 public class TestLockController {
 
     @Resource

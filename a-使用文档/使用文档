@@ -21,24 +21,24 @@ http://127.0.0.1:8080/swagger-ui/index.html
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.fox.version}</version>
             </dependency>
-            <!-- RuoYi Common Swagger -->
+            <!-- yyy Common Swagger -->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-common-swagger</artifactId>
+                <groupId>com.yyy</groupId>
+                <artifactId>yyy-common-swagger</artifactId>
             </dependency>
 3、yaml文件配置
     # swagger配置
     swagger:
       title: 权限模块接口文档
-      license: Powered By ruoyi
-      licenseUrl: https://ruoyi.vip
+      license: Powered By yyy
+      licenseUrl: https://yyy.vip
 
 到这一步已经可以通过服务模块去访问swagger
 
 4、如果想通过网关统一访问，需要注释网关配置的一些代码 SwaggerProvider
 注释掉两行代码
     .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
-    .filter(predicateDefinition -> !"ruoyi-auth".equalsIgnoreCase(routeDefinition.getId()))
+    .filter(predicateDefinition -> !"yyy-auth".equalsIgnoreCase(routeDefinition.getId()))
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,8 @@ value值  xxxxxtokenxxxxx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 如何使用远程调用
 首先启动调用的接口方的服务模块要启动和被调用方的服务模块要启动
-
+一个有启动类的服务就建立一个yyy-api-xxx的模块，包名跟它的包名层级一致
+其他服务想引用，直接引用yyy-api-xxx的依赖
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 上传文件时报错，不是因为超过了设置的文件大小，而是默认springboot的tomcat默认上传文件大小是1MB，需要设置
@@ -159,4 +160,7 @@ datasource:
 部署详情查看下面连接
 https://blog.csdn.net/zht3306/article/details/124687425?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168602279916800227471915%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168602279916800227471915&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-124687425-null-null.142^v88^control_2,239^v2^insert_chatgpt&utm_term=ruoyi%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2&spm=1018.2226.3001.4187
 
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+如何创建一个服务
+拷贝system服务，然后改名字
+注意：iml文件，他是关乎到启动类的，所以除了改名字，还要到 Edit Configuration 里面改一下路径，不然它还是指向原来system模块的启动路径
